@@ -24,6 +24,5 @@ class MainPageController:
                     description=film.description,
                     id_img=film.img_id,
                     last_modification=film.last_modification) for film in films] * 30
-        print(res)
         db_sess.close()
         return res[:-1]
