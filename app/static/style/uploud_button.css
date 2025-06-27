@@ -1,0 +1,38 @@
+/* Скрываем оригинальный инпут */
+.file-input-wrapper input[type="file"] {
+    opacity: 0;
+    position: absolute;
+    width: 1px;
+    height: 1px;
+}
+
+/* Стили только для кнопки */
+.file-input-wrapper .custom-button {
+    margin-bottom: 10px;
+    width: auto !important;
+    padding: 6px;
+    display: inline-block;
+    background: #c0c4c8;
+    border-top: 1px solid white;
+    border-left: 1px solid white;
+    border-bottom: 2px solid black;
+    border-right: 2px solid black;
+    color: black;
+    font-size: 15px;
+    text-decoration: none
+}
+
+/* Стиль при наведении */
+.file-input-wrapper .custom-button:active {
+    border-top: 1px solid black;
+    border-left: 1px solid black;
+    border-bottom: 2px solid white;
+    border-right: 2px solid white;
+}
+
+/* Текст с именами файлов (оставляем стандартным) */
+.file-input-wrapper .file-name {
+    margin-left: 10px;
+    color: #000;
+}
+

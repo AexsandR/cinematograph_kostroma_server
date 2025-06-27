@@ -1,0 +1,71 @@
+.conteiner_card{
+    margin-top: 10px;
+    display:flex;
+    flex-direction: row;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content:center;
+}
+
+.card{
+    margin-bottom: 10px;
+    background: #adafb1;
+    border-top: 1px solid white;
+    border-left: 1px solid white;
+    border-bottom: 2px solid black;
+    border-right: 2px solid black;
+    color: black;
+    font-size: 25px;
+    display: flex;
+    flex-direction: column;
+    width:300px;
+}
+
+.card_img{
+    padding: 10px;
+    aspect-ratio: 16 / 9;
+    width: 100%;
+}
+.card_text{
+    width: 100%;
+}
+
+.card_name{
+    text-align: center;
+    border-bottom: 2px solid black;
+    margin-right: 10px;
+    margin-left: 10px;
+    font-size: 25px;
+
+}
+.card_description{
+    font-size: 20px;
+    display: -webkit-box;
+    display: -moz-box; /* Для старых Firefox */
+    -webkit-box-orient: vertical;
+    -moz-box-orient: vertical; /* Для старых Firefox */
+    -webkit-line-clamp: 3; /* Число строк */
+    -moz-line-clamp: 3; /* Не поддерживается, но не помешает */
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.card_description {
+    background: #c8ad90;
+
+    overflow: hidden;
+}
+
+.card_description:after {
+    content: "";
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 40px;
+    background: linear-gradient(180deg, transparent, #c8ad90 50%);
+}
+
+.button_win95_a{
+    margin: 0 10px 10px 10px;
+    text-align: center;
+}

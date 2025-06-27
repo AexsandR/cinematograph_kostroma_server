@@ -1,0 +1,61 @@
+# IDE и редакторы кода
+.idea
+*.iml
+.vscode/
+.gigaide/
+*.swp
+*.swo
+
+# Файлы Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Виртуальное окружение Python
+venv/
+env/
+.venv/
+ENV/
+
+# Кэш pip
+.python-version
+pip-selfcheck.json
+
+# Файлы зависимостей
+*.egg-info/
+*.egg
+dist/
+build/
+.Python
+
+# Файлы кэша и журналов
+*.log
+*.pot
+*.sqlite
+*.sqlite3
+
+# Файлы операционных систем
+.DS_Store
+Thumbs.db
+
+# Файлы конфигурации
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+.credentials
+
+# Файлы тестов
+.coverage
+htmlcov/
+.pytest_cache/
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+
+# PyCharm
+.idea/
+*.iml
+*.xml
+/.idea/

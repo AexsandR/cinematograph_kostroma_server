@@ -1,0 +1,49 @@
+{% extends "screen.html" %}
+{% block content1 %}
+<form method="post" action="/add_film/" enctype="multipart/form-data">
+    <div class="file-input-wrapper">
+    <a href="/" class="custom-button" style="width: 100%">назад</a>
+    </div>
+    <p>
+        Название фильма:
+        <input class="input_text" name="name" value="{{ name }}" type="text"/>
+    </p>
+    <p>
+        Описание фильма:<br/>
+        <textarea maxlength='300' class="text_area" name="description" value="{{ description }}" multiple type="text" required no ></textarea>
+    </p>
+
+
+    <p>
+        Превью фильма:<br>
+    <div class="file-input-wrapper">
+        <button class="custom-button" onclick="document.getElementById('filePreview1').click()">Выбрать файлы</button>
+        <input name="filePreview"  type="file" id="filePreview1" required accept="image/png, image/gif, image/jpeg" style="display: none;"
+               onchange="addFiles(this.files, 'fileListPreview')">
+
+        <div id="fileListPreview" class="file-list"></div>
+    </div>
+    </p>
+    <p>
+        Новела к фильму:<br>
+    <div class="file-input-wrapper">
+        <button class="custom-button" onclick="document.getElementById('fileFrames').click()">Выбрать файлы</button>
+        <input type="file" id="fileFrames" name="fileFrames"  required multiple accept="image/png, image/gif, image/jpeg"
+               style="display: none;"
+               onchange="addFiles(this.files, 'fileListFrames')">
+
+        <div id="fileListFrames" class="file-list"></div>
+    </div>
+    </p>
+<!--    <input name="filePreview" type="file" required/>-->
+<!--    <input name="fileFrames" type="file" multiple required/>-->
+    <div class="file-input-wrapper">
+        <input class="custom-button" type="submit" value="Добавить" required/>
+    </div>
+
+</form>
+
+{% endblock %}
+
+
+

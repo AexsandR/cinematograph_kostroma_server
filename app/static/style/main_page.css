@@ -1,0 +1,130 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: geometricPrecision;
+
+}
+
+@font-face {
+font-family: 'MyCustomFont'; /* Задайте название для шрифта */
+src: url('../fonts/w95font/W95font.otf') format('opentype'); /* Укажите путь к файлу шрифта и его формат (OpenType) */
+}
+.overlay{
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Window{
+    width: 95vw;
+    height: 95vh;
+    margin: 20px;
+    background: #c4c4c4;
+    border-bottom: 5px solid black;
+    border-right: 5px solid black;
+}
+.header_window{
+    margin-top: 4px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background: #000082;
+    width: calc(100% - 10px);
+
+}
+
+.text_header{
+    padding-left: 7px;
+    padding-top: 5px;
+    color: white;
+    font-size: 45px;
+    font-family: 'MyCustomFont', sans-serif;
+}
+body{
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #54a8a8;
+}
+
+.glare{
+    height: calc(100% - 2px);
+    margin-left: 2px;
+    margin-top: 2px;
+    border-top: 3px solid white;
+    border-left: 3px solid white;
+    margin-bottom: 2px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.content{
+    padding: 10px;
+    width: calc(100% - 40px) !important;
+    position: static !important;
+    height: 100% !important;
+    overflow-y: auto !important;
+    display: flex;
+    flex-direction: column;
+    border-top: 3px solid black;
+    border-left: 3px solid black;
+    border-bottom: 2px solid white;
+    border-right: 2px solid white;
+    margin: 13px 0px 20px 0px;
+}
+
+.button_win95_close{
+    margin: 5px;
+    aspect-ratio: 1/1;
+}
+
+.button_win95_add{
+    background: #adafb1 !important;
+    height: auto !important;
+    font-size: 30px !important;
+    padding: 5px;
+    text-decoration: none;
+    text-align: center
+}
+
+
+.buttons_windows{
+
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    margin-top: 13px;
+    padding-left: 20px;
+}
+
+.conteiner1{
+    width:100%;
+    height:100%;
+    padding: 13px 20px 20px 20px;
+}
+
+@media (min-resolution: 110dpi) {
+    .text_header {
+        font-size: 25px;
+    }
+    .button_win95_close{
+        margin: 5px;
+        height: 30px;
+        width: 30px;
+    }
+
+
+}
+@media (max-width: 580px) {
+    .buttons_windows {
+        gap: 5px;
+    }
+}
+

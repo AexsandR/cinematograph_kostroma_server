@@ -1,0 +1,28 @@
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediaScreen Control</title>
+    <link rel="stylesheet" href="/static/style/main_page.css">
+    <link rel="stylesheet" href="/static/style/button.css">
+    <link rel="stylesheet" href="/static/style/scrollbar.css">
+    <link rel="stylesheet" href="/static/style/uploud_button.css">
+    <link rel="stylesheet" href="/static/style/input_text.css">
+    <link rel="stylesheet" href="/static/style/card.css">
+    <script src="/static/scripts/uploud_button.js"></script>
+</head>
+<body>
+<div class="overlay">
+    <div class="window">
+        <div class="glare">
+            <div class="header_window">
+                <div class="text_header">panel admin</div>
+                <button class="button_win95 button_win95_close"><img class="img_button"
+                                                                     src="/static/icons/icon_close.png"/></button>
+            </div>
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+</div>
+</body>
+</html>
