@@ -32,7 +32,7 @@
     <p>
         Превью фильма:<br>
     <div class="file-input-wrapper">
-        <button class="custom-button" onclick="document.getElementById('filePreview1').click()">Выбрать файлы</button>
+        <button type="button" class="custom-button" onclick="document.getElementById('filePreview1').click()">Выбрать файлы</button>
         <input name="filePreview" type="file" id="filePreview1" required accept="image/png, image/gif, image/jpeg"
                style="display: none;"
                onchange="addFiles(this.files, 'fileListPreview')">
@@ -43,8 +43,8 @@
     <p>
         Новела к фильму:<br>
     <div class="file-input-wrapper">
-        <button class="custom-button" onclick="document.getElementById('fileFrames').click()">Выбрать файлы</button>
-        <input type="file" id="fileFrames" name="fileFrames" required multiple accept="image/png, image/gif, image/jpeg"
+        <button type="button" class="custom-button" onclick="document.getElementById('fileFrames').click()">Выбрать файлы</button>
+        <input type="file" maxfiles="3" id="fileFrames" name="fileFrames" required multiple accept="image/png, image/gif, image/jpeg"
                style="display: none;"
                onchange="addFiles(this.files, 'fileListFrames')">
 

@@ -69,6 +69,7 @@ class FormAdd:
 
     async def __add_frame_novela(self, fileFrames: list[UploadFile], id_film: int) -> None:
         db_sess = db_session.create_session()
+        i: int = 0
         try:
             for fileFrame in fileFrames:
                 frame = FramesNovela()
@@ -79,6 +80,8 @@ class FormAdd:
                     frame.bin_data = file_data
                 frame.type = fileFrame.content_type
                 frame.id_film = id_film
+                frame.order = i
+                i += 1
                 db_sess.add(frame)
             db_sess.commit()
         except Exception:

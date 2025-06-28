@@ -36,7 +36,9 @@
     margin-right: 10px;
     margin-left: 10px;
     font-size: 25px;
-
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .card_description{
     font-size: 20px;
@@ -44,7 +46,7 @@
     display: -moz-box; /* Для старых Firefox */
     -webkit-box-orient: vertical;
     -moz-box-orient: vertical; /* Для старых Firefox */
-    -webkit-line-clamp: 3; /* Число строк */
+    -webkit-line-clamp: 1; /* Число строк */
     -moz-line-clamp: 3; /* Не поддерживается, но не помешает */
     overflow: hidden;
     text-overflow: ellipsis;

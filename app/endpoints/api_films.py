@@ -18,9 +18,9 @@ class ApiFilms:
                         name=film.name,
                         description=film.description,
                         id_img=film.img_id,
-                        last_modification=film.last_modification) for film in films] * 30
+                        last_modification=film.last_modification) for film in films]
             db_sess.close()
-            return res[:-1]
+            return res
 
     def get_film(self, id: str) -> Film | Error:
         db_sess = db_session.create_session()
@@ -30,7 +30,6 @@ class ApiFilms:
             return Film(id=film.id, name=film.name, description=film.description, id_img=film.img_id,
                         last_modification=film.last_modification)
         except Exception as err:
-            print(err)
             db_sess.close()
             return Error(error="IdError",
                          message="нет такого id",

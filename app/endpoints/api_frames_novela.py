@@ -37,8 +37,9 @@ class ApiFramesNovela:
         db_sess = db_session.create_session()
         ids_frame: list[int] = []
         try:
-            ids_frame = [frame.id for frame in
-                         db_sess.query(FramesNovela).filter(FramesNovela.id_film == int(id_film)).all()]
+            frames = db_sess.query(FramesNovela).filter(FramesNovela.id_film == int(id_film)).all()
+            print(frames[0].id)
+            ids_frame = [frame.id for frame in sorted(frames, key=lambda x: x.order)]
         except Exception as err:
             print("Ошибка в ApiImages: ")
             print(f"\t{err}")

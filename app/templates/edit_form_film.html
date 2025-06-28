@@ -30,22 +30,44 @@
 
     <p>
         Превью фильма:<br>
-        <img class="edit_preview" src="/api/get_images/{{ id_img }}">
+        <img id="previewImage" class="edit_preview" src="/api/get_images/{{ id_img }}">
         <br>
     <div class="file-input-wrapper">
-        <button class="custom-button">удалить</button>
+        <button type="button" class="custom-button" onclick="document.getElementById('filePreview1').click()">Изменить
+        </button>
+        <input name="filePreview" type="file" id="filePreview1" accept="image/png, image/gif, image/jpeg"
+               style="display: none;"
+               onchange="addFiles(this.files, 'fileListPreview')">
+
+        <div id="fileListPreview" class="file-list"></div>
     </div>
     </p>
     <p>
         Новела к фильму:<br>
         {% for id in id_frames %}
-        <img class="edit_preview" src="/api/get_frame/{{ id }}">
+        Кадр: {{ id[0] + 1 }}
+        <br>
+        <img class="edit_preview" src="/api/get_frame/{{ id[1] }}">
         <br>
     <div class="file-input-wrapper">
-        <button class="custom-button">удалить</button>
+        <button type="button" class="custom-button">Изменить</button>
+        <input name="" type="checkbox"
+               style="display: none;">
     </div>
-    <br>
     {% endfor %}
+    {% for id in create_frame %}
+    Кадр: {{ id + 1}}
+    <br>
+    <div class="file-input-wrapper">
+        <button type="button" class="custom-button">добавить </button>
+        <input name="" type="checkbox"
+               style="display: none;">
+    </div>
+    {% endfor %}
+    <div class="file-input-wrapper">
+        <input class="custom-button" type="submit" value="Изменить" required/>
+    </div>
+
     <!--    <div class="file-input-wrapper">-->
     <!--        <button class="custom-button" onclick="document.getElementById('fileFrames').click()">Выбрать файлы</button>-->
     <!--        <input type="file" id="fileFrames" name="fileFrames" required multiple accept="image/png, image/gif, image/jpeg"-->
@@ -56,9 +78,6 @@
     <!--    </div>-->
     <!--    </p>-->
 
-    <div class="file-input-wrapper">
-        <input class="custom-button" type="submit" value="Изменить" required/>
-    </div>
 
 </form>
 

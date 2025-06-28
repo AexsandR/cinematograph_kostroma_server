@@ -4,11 +4,11 @@ let allFilesFrames = []; // Храним все выбранные файлы
 function addFiles(newFiles, id) {
     // Добавляем новые файлы к существующим
     if (id == "fileListPreview"){
-        allFilesPreview = [...allFilesPreview, ...newFiles];
+        allFilesPreview = [...newFiles];
 
     }else{
         if(allFilesFrames.length < 3){
-            allFilesFrames = [...allFilesFrames, ...newFiles];
+            allFilesFrames = [...newFiles];
         }else{
             alert("можно только 3 кадра")
         }
