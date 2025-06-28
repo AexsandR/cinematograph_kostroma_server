@@ -1,4 +1,4 @@
-function addFiles(files, id) {
+function addFiles(files, id, fileid) {
     const fileListDiv = document.getElementById(id);
     fileListDiv.innerHTML = '';
 
@@ -11,7 +11,17 @@ function addFiles(files, id) {
     console.log(file);
 
     const fileItem = document.createElement('div');
-    fileItem.className = 'file-item';
-    fileItem.textContent = file.name;
+
+    fileItem.innerHTML = `
+            <span>${file.name}</span>
+            <button type="button" onclick="cancellation('${fileid}', '${id}')">×</button>
+        `;
     fileListDiv.appendChild(fileItem);
+}
+
+function cancellation(input_id, id){
+    const fileListDiv = document.getElementById(id);
+    fileListDiv.innerHTML = '';
+    const fileInput = document.getElementById(input_id);
+    fileInput.value = '';
 }

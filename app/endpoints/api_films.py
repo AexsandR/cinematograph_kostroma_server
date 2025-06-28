@@ -1,6 +1,11 @@
+from sqlite3 import sqlite_version
+from sys import prefix
+
 from fastapi import APIRouter
+from fastapi.responses import JSONResponse
 from app.db.models.films import Films
 from app.db import db_session
+from app.db.models.images import Images
 from app.schemas.film import Film
 from app.schemas.error import Error
 
@@ -12,25 +17,30 @@ class ApiFilms:
         self.routers.add_api_route("/get_film/{id}", self.get_film, methods=["GET"])
 
     def get_films(self) -> list[Film]:
-            db_sess = db_session.create_session()
-            films = db_sess.query(Films).all()
-            res = [Film(id=film.id,
-                        name=film.name,
-                        description=film.description,
-                        id_img=film.img_id,
-                        last_modification=film.last_modification) for film in films]
-            db_sess.close()
-            return res
+        db_sess = db_session.create_session()
+        films = db_sess.query(Films).all()
+        res = [Film(id=film.id,
+                    name=film.name,
+                    description=film.description,
+                    id_img=film.img_id,
+                    id_frame=film.frame_id,
+                    last_modification=film.last_modification) for film in films]
+        db_sess.close()
+        return res
 
     def get_film(self, id: str) -> Film | Error:
         db_sess = db_session.create_session()
         try:
             film = db_sess.query(Films).filter(Films.id == int(id)).first()
-
+            db_sess.close()
             return Film(id=film.id, name=film.name, description=film.description, id_img=film.img_id,
+                        id_frame=film.frame_id,
                         last_modification=film.last_modification)
         except Exception as err:
+            print("*" * 100)
+            print(err)
             db_sess.close()
             return Error(error="IdError",
                          message="нет такого id",
                          status_code=404)
+

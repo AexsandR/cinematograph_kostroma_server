@@ -9,7 +9,7 @@
         display: inline-block
     }
 </style>
-<form method="post" action="/editForm/{{ type }}" enctype="multipart/form-data">
+<form method="post" action="/editForm/{{ type }}/{{id}}" enctype="multipart/form-data">
     <div class="file-input-wrapper">
         <a href="/" class="custom-button" style="width: 100%">назад</a>
     </div>
@@ -45,36 +45,20 @@
     </p>
     <p>
         Новела к фильму:<br>
-        {% for id in id_frames %}
-        Кадр: {{ id[0] + 1 }}
         <br>
-        <img class="edit_preview" src="/api/get_frame/{{ id[1] }}">
+        <img class="edit_preview" src="/api/get_frame/{{ id_frame }}">
         <br>
     <div class="file-input-wrapper">
-        <button type="button" class="custom-button" onclick="document.getElementById('fileFrame1').click()">
+        <button type="button" class="custom-button" onclick="document.getElementById('fileFrame').click()">
             Изменить кадр
         </button>
-        <input type="file" name="fileFrame{{ id[0] + 1}}" id="fileFrame{{ id[0] + 1}}"
+        <input type="file" name="fileFrame" id="fileFrame"
                accept="image/png, image/gif, image/jpeg"
                style="display: none;"
-               onchange="addFiles(this.files, 'file_frame{{ id[0] + 1}}')">
-        <div id="file_frame{{ id[0] + 1}}" class="file-list"></div>
+               onchange="addFiles(this.files, 'file_frame', 'fileFrame')">
+        <div id="file_frame" class="file-list"></div>
     </div>
-    {% endfor %}
-    {% for id in create_frame %}
-    Кадр: {{ id + 1}}
-    <br>
-    <div class="file-input-wrapper">
-        <button type="button" class="custom-button" onclick="document.getElementById('fileFrame1').click()">
-            добавить кадр
-        </button>
-        <input type="file" name="fileFrame{{ id + 1}}" id="fileFrame{{ id + 1}}"
-               accept="image/png, image/gif, image/jpeg"
-               style="display: none;"
-               onchange="addFiles(this.files, 'file_frame{{ id + 1}}')">
-        <div id="file_frame{{ id + 1}}" class="file-list"></div>
-    </div>
-    {% endfor %}
+
     <div class="file-input-wrapper">
         <input class="custom-button" type="submit" value="Приянть изменеия" required/>
     </div>

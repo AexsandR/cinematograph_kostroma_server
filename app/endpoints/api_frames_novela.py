@@ -13,8 +13,7 @@ class ApiFramesNovela:
     def __init__(self):
         self.routres = APIRouter(prefix="/api")
         self.routres.add_api_route("/get_frame/{id_image}", self.__get_frame, methods=["GET"])
-        self.routres.add_api_route("/get_ids_novela_frames/{id_film}",
-                                   self.get_id_novela_frames, methods=["GET"])
+
 
     """надо было делать наслежование"""
 
@@ -31,17 +30,12 @@ class ApiFramesNovela:
         type_img, bin_data = self.__get_frame_bin(int(id_image))
         return Response(content=bin_data, media_type=type_img)
 
-    """возвращает все id кадров новелы у фильма"""
-
-    def get_id_novela_frames(self, id_film: str) -> JSONResponse:
+    def del_img(self, id: int) -> JSONResponse:
         db_sess = db_session.create_session()
-        ids_frame: list[int] = []
-        try:
-            frames = db_sess.query(FramesNovela).filter(FramesNovela.id_film == int(id_film)).all()
-            print(frames[0].id)
-            ids_frame = [frame.id for frame in sorted(frames, key=lambda x: x.order)]
-        except Exception as err:
-            print("Ошибка в ApiImages: ")
-            print(f"\t{err}")
+        img = db_sess.query(FramesNovela).filter(FramesNovela.id == id).first()
+        if img == None:
+            return JSONResponse({"status": "404"})
+        db_sess.delete(img)
+        db_sess.commit()
         db_sess.close()
-        return JSONResponse({"ids": ids_frame})
+        return JSONResponse({"status": "200"})

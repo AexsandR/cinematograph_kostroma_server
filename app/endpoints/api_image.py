@@ -4,7 +4,7 @@ from app.schemas.image import Image
 from app.schemas.error import Error
 from app.db import db_session
 from fastapi import APIRouter
-from fastapi.responses import Response
+from fastapi.responses import Response, JSONResponse
 import base64
 from app.db.__all_models import *
 
@@ -23,6 +23,15 @@ class ApiImages:
         else:
             return ("", b"")
 
+    def del_img(self, id: int) -> JSONResponse:
+        db_sess = db_session.create_session()
+        img = db_sess.query(Images).filter(Images.id == id).first()
+        if img == None:
+            return JSONResponse({"status": "404"})
+        db_sess.delete(img)
+        db_sess.commit()
+        db_sess.close()
+        return JSONResponse({"status": "200"})
 
 
     def __get_image(self, id_image: str) -> Response:

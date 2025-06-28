@@ -37,46 +37,24 @@
         </button>
         <input name="filePreview" id="filePreview" type="file" required accept="image/png, image/gif, image/jpeg"
                style="display: none;"
-               onchange="addFiles(this.files, 'file_Preview')">
+               onchange="addFiles(this.files, 'file_Preview', 'filePreview')">
 
         <div id="file_Preview" class="file-list"></div>
     </div>
     </p>
     <p>
         Новела к фильму:<br>
-        Кадр 1: <br>
     <div class="file-input-wrapper">
-        <button type="button" class="custom-button" onclick="document.getElementById('fileFrame1').click()">Выбрать
+        <button type="button" class="custom-button" onclick="document.getElementById('fileFrame').click()">Выбрать
             файл
         </button>
-        <input type="file" name="fileFrame1" id="fileFrame1" required accept="image/png, image/gif, image/jpeg"
+        <input type="file" name="fileFrame" id="fileFrame" required accept="image/png, image/gif, image/jpeg"
                style="display: none;"
-               onchange="addFiles(this.files, 'file_frame1')">
-        <div id="file_frame1" class="file-list"></div>
+               onchange="addFiles(this.files, 'file_frame', 'fileFrame')">
+        <div id="file_frame" class="file-list"></div>
     </div>
     <br>
-    Кадр 2: <br>
-    <div class="file-input-wrapper">
-        <button type="button" class="custom-button" onclick="document.getElementById('fileFrame2').click()">Выбрать
-            файл
-        </button>
-        <input type="file" name="fileFrame2" id="fileFrame2" accept="image/png, image/gif, image/jpeg"
-               style="display: none;"
-               onchange="addFiles(this.files, 'file_frame2')">
-        <div id="file_frame2" class="file-list"></div>
-    </div>
-    <br>
-    Кадр 3: <br>
-    <div class="file-input-wrapper">
-        <button type="button" class="custom-button" onclick="document.getElementById('fileFrame3').click()">Выбрать
-            файл
-        </button>
-        <input type="file" id="fileFrame3" name="fileFrame3" accept="image/png, image/gif, image/jpeg"
-               style="display: none;"
-               onchange="addFiles(this.files, 'file_frame3')">
-        <div id="file_frame3" class="file_frame3"></div>
-    </div>
-    <br>
+
     </p>
     <div class="file-input-wrapper">
         <input class="custom-button" type="submit" value="Добавить" required/>
