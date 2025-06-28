@@ -33,7 +33,6 @@ function updateFileList(id) {
         fileItem.className = 'file-item';
         fileItem.innerHTML = `
         ${file.name}
-        <button onclick="removeFile(${index}, '${id}')">×</button>
       `;
         fileListDiv.appendChild(fileItem);
     });

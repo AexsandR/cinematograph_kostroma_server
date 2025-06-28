@@ -9,8 +9,8 @@ class Images(SqlAlchemyBase):
     type: str = Column(String, nullable=True)
 
 
-class FrameNovela(SqlAlchemyBase):
-    __tablename__ = "FrameNovela"
+class FramesNovela(SqlAlchemyBase):
+    __tablename__ = "FramesNovela"
     id: int = Column(Integer, primary_key=True, autoincrement=True)
     id_film: int = Column(Integer, ForeignKey("Films.id"), nullable=True)
     bin_data: bytes = Column(LargeBinary, nullable=True)

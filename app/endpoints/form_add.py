@@ -4,15 +4,15 @@ from fastapi import APIRouter, UploadFile, Request, File, Form
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse, RedirectResponse
 from app.db import db_session
-from app.db.__all_models import Images, Films, FrameNovela
+from app.db.__all_models import Images, Films, FramesNovela
 
 
-class FormAddFilm:
+class FormAdd:
     def __init__(self, ):
         self.__templates = Jinja2Templates(directory="app/templates")
-        self.router = APIRouter(prefix="/add_film")
-        self.router.add_api_route("/", self.__get_form_film, methods=["POST"], response_model=None)
-        self.router.add_api_route("/", self.__show_form, methods=["GET"])
+        self.router = APIRouter(prefix="/addForm")
+        self.router.add_api_route("/film", self.__get_form_film, methods=["POST"], response_model=None)
+        self.router.add_api_route("/film", self.__show_form, methods=["GET"])
 
     def __show_form(self, request: Request) -> HTMLResponse:
         return self.__templates.TemplateResponse("form_add_film.html", {"request": request, "error": False})
@@ -71,7 +71,7 @@ class FormAddFilm:
         db_sess = db_session.create_session()
         try:
             for fileFrame in fileFrames:
-                frame = FrameNovela()
+                frame = FramesNovela()
                 file_data = await fileFrame.read()
                 if isinstance(file_data, str):
                     frame.bin_data = file_data.encode('latin1')  # сохраняет бинарные данные без потерь

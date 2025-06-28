@@ -9,7 +9,7 @@
         display: inline-block
     }
 </style>
-<form method="post" action="/addForm/film" enctype="multipart/form-data">
+<form method="post" action="/editForm/{{ type }}" enctype="multipart/form-data">
     <div class="file-input-wrapper">
         <a href="/" class="custom-button" style="width: 100%">назад</a>
     </div>
@@ -24,21 +24,16 @@
     </p>
     <p>
         Описание фильма:<br/>
-        <textarea maxlength='300' class="text_area" name="description" value="{{ description }}" multiple type="text"
-                  required no></textarea>
+        <textarea maxlength='300' class="text_area" name="description" required>{{ description }}</textarea>
     </p>
 
 
     <p>
         Превью фильма:<br>
-    <div class="file-input-wrapper">
-        <button class="custom-button" onclick="document.getElementById('filePreview1').click()">Выбрать файлы</button>
-        <input name="filePreview" type="file" id="filePreview1" required accept="image/png, image/gif, image/jpeg"
-               style="display: none;"
-               onchange="addFiles(this.files, 'fileListPreview')">
-
-        <div id="fileListPreview" class="file-list"></div>
-    </div>
+        <img class="edit_preview" src="/api/get_images/{{ id_img }}">
+        <div class="file-input-wrapper">
+            <button class="custom-button">удалить</button>
+        </div>
     </p>
     <p>
         Новела к фильму:<br>
@@ -53,7 +48,7 @@
     </p>
 
     <div class="file-input-wrapper">
-        <input class="custom-button" type="submit" value="Добавить" required/>
+        <input class="custom-button" type="submit" value="Изменить" required/>
     </div>
 
 </form>
