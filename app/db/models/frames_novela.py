@@ -1,0 +1,11 @@
+from sqlalchemy import Column, Integer, ForeignKey, LargeBinary, String
+from ..db_session import SqlAlchemyBase
+
+
+class FramesNovela(SqlAlchemyBase):
+    __tablename__ = "FramesNovela"
+    id: int = Column(Integer, primary_key=True, autoincrement=True)
+    id_film: int = Column(Integer, ForeignKey("Films.id"), nullable=True)
+    order: int = Column(Integer, nullable=True)
+    bin_data: bytes = Column(LargeBinary, nullable=True)
+    type: str = Column(String, nullable=True)

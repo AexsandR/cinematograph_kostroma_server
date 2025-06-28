@@ -20,7 +20,12 @@ class FormAdd:
     async def __get_form_film(self, request: Request, name: str = Form(...),
                               description: str = Form(...),
                               filePreview: UploadFile = File(...),
-                              fileFrames: list[UploadFile] = File(...)) -> RedirectResponse | HTTPResponse:
+                              fileFrame1: UploadFile = File(...),
+                              fileFrame2: UploadFile = File(...),
+                              fileFrame3: UploadFile = File(...)
+                              ) -> RedirectResponse | HTTPResponse:
+        fileFrames = [fileFrame1, fileFrame2, fileFrame3]
+        print(fileFrame1.filename)
         res = await self.__add_preview(filePreview)
         success, id_preview = res
         res = await self.__add_film(name, description, id_preview)
@@ -72,6 +77,8 @@ class FormAdd:
         i: int = 0
         try:
             for fileFrame in fileFrames:
+                if fileFrame.size == 0:
+                    continue
                 frame = FramesNovela()
                 file_data = await fileFrame.read()
                 if isinstance(file_data, str):

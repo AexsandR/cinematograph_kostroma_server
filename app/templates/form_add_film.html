@@ -20,7 +20,7 @@
     {% endif %}
     <p>
         Название фильма:
-        <input class="input_text" name="name" value="{{ name }}" type="text"/>
+        <input class="input_text" name="name" value="{{ name }}" type="text" required/>
     </p>
     <p>
         Описание фильма:<br/>
@@ -32,26 +32,52 @@
     <p>
         Превью фильма:<br>
     <div class="file-input-wrapper">
-        <button type="button" class="custom-button" onclick="document.getElementById('filePreview1').click()">Выбрать файлы</button>
-        <input name="filePreview" type="file" id="filePreview1" required accept="image/png, image/gif, image/jpeg"
+        <button type="button" class="custom-button" onclick="document.getElementById('filePreview').click()">Выбрать
+            файл
+        </button>
+        <input name="filePreview" id="filePreview" type="file" required accept="image/png, image/gif, image/jpeg"
                style="display: none;"
-               onchange="addFiles(this.files, 'fileListPreview')">
+               onchange="addFiles(this.files, 'file_Preview')">
 
-        <div id="fileListPreview" class="file-list"></div>
+        <div id="file_Preview" class="file-list"></div>
     </div>
     </p>
     <p>
         Новела к фильму:<br>
+        Кадр 1: <br>
     <div class="file-input-wrapper">
-        <button type="button" class="custom-button" onclick="document.getElementById('fileFrames').click()">Выбрать файлы</button>
-        <input type="file" maxfiles="3" id="fileFrames" name="fileFrames" required multiple accept="image/png, image/gif, image/jpeg"
+        <button type="button" class="custom-button" onclick="document.getElementById('fileFrame1').click()">Выбрать
+            файл
+        </button>
+        <input type="file" name="fileFrame1" id="fileFrame1" required accept="image/png, image/gif, image/jpeg"
                style="display: none;"
-               onchange="addFiles(this.files, 'fileListFrames')">
-
-        <div id="fileListFrames" class="file-list"></div>
+               onchange="addFiles(this.files, 'file_frame1')">
+        <div id="file_frame1" class="file-list"></div>
     </div>
+    <br>
+    Кадр 2: <br>
+    <div class="file-input-wrapper">
+        <button type="button" class="custom-button" onclick="document.getElementById('fileFrame2').click()">Выбрать
+            файл
+        </button>
+        <input type="file" name="fileFrame2" id="fileFrame2" accept="image/png, image/gif, image/jpeg"
+               style="display: none;"
+               onchange="addFiles(this.files, 'file_frame2')">
+        <div id="file_frame2" class="file-list"></div>
+    </div>
+    <br>
+    Кадр 3: <br>
+    <div class="file-input-wrapper">
+        <button type="button" class="custom-button" onclick="document.getElementById('fileFrame3').click()">Выбрать
+            файл
+        </button>
+        <input type="file" id="fileFrame3" name="fileFrame3" accept="image/png, image/gif, image/jpeg"
+               style="display: none;"
+               onchange="addFiles(this.files, 'file_frame3')">
+        <div id="file_frame3" class="file_frame3"></div>
+    </div>
+    <br>
     </p>
-
     <div class="file-input-wrapper">
         <input class="custom-button" type="submit" value="Добавить" required/>
     </div>

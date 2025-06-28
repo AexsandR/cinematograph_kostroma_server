@@ -1,49 +1,17 @@
-let allFilesPreview = []; // Храним все выбранные файлы
-let allFilesFrames = []; // Храним все выбранные файлы
-
-function addFiles(newFiles, id) {
-    // Добавляем новые файлы к существующим
-    if (id == "fileListPreview"){
-        allFilesPreview = [...newFiles];
-
-    }else{
-        if(allFilesFrames.length < 3){
-            allFilesFrames = [...newFiles];
-        }else{
-            alert("можно только 3 кадра")
-        }
-    }
-
-    updateFileList(id);
-}
-
-function updateFileList(id) {
+function addFiles(files, id) {
     const fileListDiv = document.getElementById(id);
     fileListDiv.innerHTML = '';
-    if (id == "fileListPreview"){
-        allFiles = allFilesPreview;
 
-    }else{
-
-        allFiles = allFilesFrames;
+    if (!files || files.length === 0) {
+        console.log("Файл не выбран");
+        return;
     }
 
-    allFiles.forEach((file, index) => {
-        const fileItem = document.createElement('div');
-        fileItem.className = 'file-item';
-        fileItem.innerHTML = `
-        ${file.name}
-      `;
-        fileListDiv.appendChild(fileItem);
-    });
-}
+    const file = files[0]; // Берём только первый файл
+    console.log(file);
 
-function removeFile(index, id) {
-    if (id == "fileListPreview"){
-        allFilesPreview.splice(index, 1);
-
-    }else{
-        allFilesFrames.splice(index, 1);
-    }
-    updateFileList(id);
+    const fileItem = document.createElement('div');
+    fileItem.className = 'file-item';
+    fileItem.textContent = file.name;
+    fileListDiv.appendChild(fileItem);
 }
