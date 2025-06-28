@@ -1,16 +1,31 @@
 {% extends "screen.html" %}
 {% block content1 %}
+<style>
+    .error_name{
+        background: red;
+        color: white;
+        font-size: 21px;
+        width: auto;
+        display: inline-block
+    }
+</style>
 <form method="post" action="/add_film/" enctype="multipart/form-data">
     <div class="file-input-wrapper">
-    <a href="/" class="custom-button" style="width: 100%">назад</a>
+        <a href="/" class="custom-button" style="width: 100%">назад</a>
     </div>
+    {% if error %}
+    <div class="error_name">Такой фильм уже есть</div>
+    <div class>Такой фильм уже есть</div>
+
+    {% endif %}
     <p>
         Название фильма:
         <input class="input_text" name="name" value="{{ name }}" type="text"/>
     </p>
     <p>
         Описание фильма:<br/>
-        <textarea maxlength='300' class="text_area" name="description" value="{{ description }}" multiple type="text" required no ></textarea>
+        <textarea maxlength='300' class="text_area" name="description" value="{{ description }}" multiple type="text"
+                  required no></textarea>
     </p>
 
 
@@ -18,7 +33,8 @@
         Превью фильма:<br>
     <div class="file-input-wrapper">
         <button class="custom-button" onclick="document.getElementById('filePreview1').click()">Выбрать файлы</button>
-        <input name="filePreview"  type="file" id="filePreview1" required accept="image/png, image/gif, image/jpeg" style="display: none;"
+        <input name="filePreview" type="file" id="filePreview1" required accept="image/png, image/gif, image/jpeg"
+               style="display: none;"
                onchange="addFiles(this.files, 'fileListPreview')">
 
         <div id="fileListPreview" class="file-list"></div>
@@ -28,15 +44,14 @@
         Новела к фильму:<br>
     <div class="file-input-wrapper">
         <button class="custom-button" onclick="document.getElementById('fileFrames').click()">Выбрать файлы</button>
-        <input type="file" id="fileFrames" name="fileFrames"  required multiple accept="image/png, image/gif, image/jpeg"
+        <input type="file" id="fileFrames" name="fileFrames" required multiple accept="image/png, image/gif, image/jpeg"
                style="display: none;"
                onchange="addFiles(this.files, 'fileListFrames')">
 
         <div id="fileListFrames" class="file-list"></div>
     </div>
     </p>
-<!--    <input name="filePreview" type="file" required/>-->
-<!--    <input name="fileFrames" type="file" multiple required/>-->
+
     <div class="file-input-wrapper">
         <input class="custom-button" type="submit" value="Добавить" required/>
     </div>
