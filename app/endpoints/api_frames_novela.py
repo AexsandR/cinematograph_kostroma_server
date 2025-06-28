@@ -13,8 +13,8 @@ class ApiFramesNovela:
     def __init__(self):
         self.routres = APIRouter(prefix="/api")
         self.routres.add_api_route("/get_frame/{id_image}", self.__get_frame, methods=["GET"])
-        self.routres.add_api_route("/__get_ids_novela_frames/{id_film}",
-                                   self.__get_ids_novela_frames, methods=["GET"])
+        self.routres.add_api_route("/get_ids_novela_frames/{id_film}",
+                                   self.get_id_novela_frames, methods=["GET"])
 
     """надо было делать наслежование"""
 
@@ -33,7 +33,7 @@ class ApiFramesNovela:
 
     """возвращает все id кадров новелы у фильма"""
 
-    def __get_ids_novela_frames(self, id_film: str) -> JSONResponse:
+    def get_id_novela_frames(self, id_film: str) -> JSONResponse:
         db_sess = db_session.create_session()
         ids_frame: list[int] = []
         try:

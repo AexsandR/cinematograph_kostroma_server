@@ -31,21 +31,30 @@
     <p>
         Превью фильма:<br>
         <img class="edit_preview" src="/api/get_images/{{ id_img }}">
-        <div class="file-input-wrapper">
-            <button class="custom-button">удалить</button>
-        </div>
+        <br>
+    <div class="file-input-wrapper">
+        <button class="custom-button">удалить</button>
+    </div>
     </p>
     <p>
         Новела к фильму:<br>
+        {% for id in id_frames %}
+        <img class="edit_preview" src="/api/get_frame/{{ id }}">
+        <br>
     <div class="file-input-wrapper">
-        <button class="custom-button" onclick="document.getElementById('fileFrames').click()">Выбрать файлы</button>
-        <input type="file" id="fileFrames" name="fileFrames" required multiple accept="image/png, image/gif, image/jpeg"
-               style="display: none;"
-               onchange="addFiles(this.files, 'fileListFrames')">
-
-        <div id="fileListFrames" class="file-list"></div>
+        <button class="custom-button">удалить</button>
     </div>
-    </p>
+    <br>
+    {% endfor %}
+    <!--    <div class="file-input-wrapper">-->
+    <!--        <button class="custom-button" onclick="document.getElementById('fileFrames').click()">Выбрать файлы</button>-->
+    <!--        <input type="file" id="fileFrames" name="fileFrames" required multiple accept="image/png, image/gif, image/jpeg"-->
+    <!--               style="display: none;"-->
+    <!--               onchange="addFiles(this.files, 'fileListFrames')">-->
+
+    <!--        <div id="fileListFrames" class="file-list"></div>-->
+    <!--    </div>-->
+    <!--    </p>-->
 
     <div class="file-input-wrapper">
         <input class="custom-button" type="submit" value="Изменить" required/>
