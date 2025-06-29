@@ -10,7 +10,7 @@
             {{ film.name }}
         </div>
         <img src="/api/get_images/{{ film.id_img }}" class="card_img">
-        <a class="button_win95 button_win95_a">удалить фильм</a>
+        <a class="button_win95 button_win95_a" href="api/del_film/{{film.id}}">удалить фильм</a>
         <a class="button_win95 button_win95_a"  href="/editForm/film/{{film.id}}">изменить фильм</a>
         <a class="button_win95 button_win95_a">изменить места</a>
     </div>
