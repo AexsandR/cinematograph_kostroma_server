@@ -4,7 +4,7 @@ from fastapi import APIRouter, UploadFile, Request, File, Form
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse, RedirectResponse
 from app.db import db_session
-from app.db.__all_models import Images, Films, FramesNovela
+from app.db.__all_models import Images, Films
 
 
 class FormAdd:
@@ -74,13 +74,14 @@ class FormAdd:
         try:
             if fileFrame.size == 0:
                 return
-            frame = FramesNovela()
+            frame = Images()
             file_data = await fileFrame.read()
             if isinstance(file_data, str):
                 frame.bin_data = file_data.encode('latin1')  # сохраняет бинарные данные без потерь
             elif isinstance(file_data, bytes):
                 frame.bin_data = file_data
             frame.type = fileFrame.content_type
+            frame.is_preview = False
             db_sess.add(frame)
             db_sess.commit()
             id: int = frame.id

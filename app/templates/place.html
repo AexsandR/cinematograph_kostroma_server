@@ -1,0 +1,18 @@
+{% extends "screen.html" %}
+{% block content1 %}
+
+<a href="/addForm/film" class="button_win95 button_win95_add">Добавить фильм</a>
+<div class="conteiner_card">
+
+    {% for place in list_places %}
+    <div class="card">
+        <div class="card_name">
+            {{ place.name_place  }}
+        </div>
+        <img src="/api/get_images/{{ place.img_id }}" class="card_img">
+        <a class="button_win95 button_win95_a" href="api/del_film/{{film.id}}">удалить фильм</a>
+        <a class="button_win95 button_win95_a"  href="/editForm/film/{{film.id}}">изменить место</a>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

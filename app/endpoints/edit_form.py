@@ -5,7 +5,6 @@ from fastapi.responses import HTMLResponse, RedirectResponse
 from app.db import db_session
 from app.db.__all_models import Films
 from app.endpoints.api_films import ApiFilms
-from app.endpoints.api_frames_novela import ApiFramesNovela
 from app.endpoints.form_add import FormAdd
 from app.endpoints.api_image import ApiImages
 
@@ -17,7 +16,6 @@ class FormEdit:
         self.router.add_api_route("/film/{id}", self.__show_form_film, methods=["GET"], response_model=None)
         self.router.add_api_route("/film/{id}", self.__get_form_film, methods=["POST"], response_model=None)
         self.__apiFilm = ApiFilms()
-        self.__apiFramesNovela = ApiFramesNovela()
         self.__addForm = FormAdd()
         self.__apiImages = ApiImages()
 
