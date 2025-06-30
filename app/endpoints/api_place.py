@@ -1,3 +1,4 @@
+from http.client import responses
 from xml.sax import parse
 
 from fastapi import APIRouter
@@ -12,50 +13,46 @@ from app.schemas.place import Place
 class ApiPlace:
     def __init__(self):
         self.routers = APIRouter(prefix="/api")
-        self.routers.add_api_route("/get_place", self.get_films, methods=["GET"])
+        self.routers.add_api_route("/get_place/{id_film}", self.get_places, methods=["GET"])
 
-    # def get_place(self) -> list[Place]:
-    #     db_sess = db_session.create_session()
-    #     places = db_sess.query(Places).all()
-    #     res = [Place(id=place.id,
-    #                  name=place.name_place,
-    #                  description=place.description,
-    #                  latitude=place.latitude,
-    #                  longitude=place.longitude,
-    #                  rado
-    #                  ) for place in places]
-    #     db_sess.close()
-    #     return res
-
-    def del_film(self, id: str) -> RedirectResponse:
+    def get_places(self, id_film: str) -> list[Place]:
         db_sess = db_session.create_session()
-        try:
-            film: Films = db_sess.query(Films).filter(Films.id == str(id)).first()
-            preview: Images = db_sess.query(Images).filter(Images.id == film.img_id).first()
-            frame: Images = db_sess.query(Images).filter(Images.id == film.frame_id).first()
-            db_sess.delete(film)
-            db_sess.delete(preview)
-            db_sess.delete(frame)
-            db_sess.commit()
-            db_sess.close()
-            return RedirectResponse("/", status_code=303)
-        except Exception as err:
-            print(f"Ошибка в удалении фильма:\n\t{err}")
-            db_sess.close()
-            return RedirectResponse("/", status_code=404)
+        film: Films = db_sess.query(Films).filter(Films.id == id_film).first()
+        places = film.places
+        response: list[Place] = []
+        for place in places:
+            response.append(
+                Place(
+                    id=place.id,
+                    name_place=place.name_place,
+                    id_question=place.id_question,
+                    latitude=place.latitude,
+                    longitude=place.longitude,
+                    radius=place.radius,
+                    img_id=place.img_id,
+                    fact_id=place.fact_id,
+                    hints_id=[img.id for img in place.hints],
+                    last_modification=place.last_modification
+                )
+            )
 
-    def get_film(self, id: str) -> Film | Error:
-        db_sess = db_session.create_session()
-        try:
-            film = db_sess.query(Films).filter(Films.id == int(id)).first()
-            db_sess.close()
-            return Film(id=film.id, name=film.name, description=film.description, id_img=film.img_id,
-                        id_frame=film.frame_id,
-                        last_modification=film.last_modification)
-        except Exception as err:
-            print(f"Ошибка в получения фильма по id:\n\t{err}")
-            print(err)
-            db_sess.close()
-            return Error(error="IdError",
-                         message="нет такого id",
-                         status_code=404)
+        db_sess.close()
+        return response
+
+
+def del_place(self, id_place: str) -> RedirectResponse:
+    db_sess = db_session.create_session()
+    try:
+        film: Films = db_sess.query(Films).filter(Films.id == str(id)).first()
+        preview: Images = db_sess.query(Images).filter(Images.id == film.img_id).first()
+        frame: Images = db_sess.query(Images).filter(Images.id == film.frame_id).first()
+        db_sess.delete(film)
+        db_sess.delete(preview)
+        db_sess.delete(frame)
+        db_sess.commit()
+        db_sess.close()
+        return RedirectResponse("/", status_code=303)
+    except Exception as err:
+        print(f"Ошибка в удалении фильма:\n\t{err}")
+        db_sess.close()
+        return RedirectResponse("/", status_code=404)

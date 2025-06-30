@@ -12,3 +12,8 @@ class Films(SqlAlchemyBase):
     img_id: int = Column(Integer, ForeignKey("Images.id"), nullable=False)
     frame_id: int = Column(Integer, ForeignKey("Images.id"), nullable=True)
     last_modification: datetime = Column(DateTime, nullable=False, default=datetime.now)
+    places = relationship(
+        "Places",
+        secondary="film_place_association",
+        back_populates="films"
+    )

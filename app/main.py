@@ -5,7 +5,7 @@ from fastapi.templating import Jinja2Templates
 from app.db import db_session
 from app.endpoints.api_image import ApiImages
 from app.endpoints.form_add import FormAdd
-from app.endpoints.mainPageController import PageController
+from app.endpoints.pageController import PageController
 from app.endpoints.edit_form import FormEdit
 from app.endpoints.api_films import ApiFilms
 

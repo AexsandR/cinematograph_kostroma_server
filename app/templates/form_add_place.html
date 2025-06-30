@@ -1,0 +1,135 @@
+{% extends "screen.html" %}
+{% block content1 %}
+<style>
+    .error_name{
+        background: red;
+        color: white;
+        font-size: 21px;
+        width: auto;
+        display: inline-block
+    }
+</style>
+<form method="post" action="/addForm/place/{{id}}" enctype="multipart/form-data">
+    <div class="file-input-wrapper">
+        <a href="/" class="custom-button" style="width: 100%">назад</a>
+    </div>
+    {% if error %}
+    <div class="error_name">Такое место уже есть</div>
+
+    {% endif %}
+    <p>
+        Название места:
+        <input class="input_text" name="name_place" type="text" required/>
+    </p>
+    <p>
+        Широта:
+        <input type="number" class="input_text" name="latitude" />
+    </p>
+    <p>
+        Долгота:
+        <input type="number" class="input_text" name="longitude" />
+    </p>
+    <p>
+        Факт о месте:<br>
+    <div class="file-input-wrapper">
+        <button type="button" class="custom-button" onclick="document.getElementById('fileFact').click()">Выбрать
+            файл
+        </button>
+        <input name="fileFact" id="fileFact" type="file" required accept="image/png, image/jpeg"
+               style="display: none;"
+               onchange="addFiles(this.files, 'file_fact', 'fileFact')">
+
+        <div id="file_fact" class="file-list"></div>
+    </div>
+    </p>
+    <p>
+        Вопрос по месту:<br>
+        <textarea class="text_area" name="question" multiple type="text"
+                  required no></textarea>
+    </p>
+    <p>
+
+        Ответ (Первый вариант это правильный ответ. Если вам нужно,чтоб игрок вводил ответ то заполните только первое
+        поле.):<br>
+        <input class="input_text" name="answer1" type="text" required/> <br><br>
+        <input class="input_text" name="answer2" type="text"/><br><br>
+        <input class="input_text" name="answer3" type="text"/><br><br>
+        <input class="input_text" name="answer4" type="text"/><br>
+
+    </p>
+    <p>
+        Искаженный кадр места:<br>
+    <div class="file-input-wrapper">
+        <button type="button" class="custom-button" onclick="document.getElementById('filePreview').click()">Выбрать
+            файл
+        </button>
+        <input name="filePreview" id="filePreview" type="file" required accept="image/png, image/jpeg"
+               style="display: none;"
+               onchange="addFiles(this.files, 'file_Preview', 'filePreview')">
+
+        <div id="file_Preview" class="file-list"></div>
+    </div>
+    </p>
+    <p>
+        Подсказки к фильму:<br>
+        Подсказка искаженный кадр места:<br>
+    <div class="file-input-wrapper">
+        <button type="button" class="custom-button" onclick="document.getElementById('fileHint1').click()">Выбрать
+            файл
+        </button>
+        <input type="file" name="fileHint1" id="fileHint1" required accept="image/png, image/jpeg"
+               style="display: none;"
+               onchange="addFiles(this.files, 'file_hint1', 'fileHint1')">
+        <div id="file_hint1" class="file-list"></div>
+    </div>
+    <br>
+    </p>
+    <p>
+        Подсказка оригинальный кадр:<br>
+    <div class="file-input-wrapper">
+        <button type="button" class="custom-button" onclick="document.getElementById('fileHint2').click()">Выбрать
+            файл
+        </button>
+        <input type="file" name="fileHint2" id="fileHint2" required accept="image/png, image/jpeg"
+               style="display: none;"
+               onchange="addFiles(this.files, 'file_hint2', 'fileHint2')">
+        <div id="file_hint2" class="file-list"></div>
+    </div>
+    <br>
+    </p>
+    <p>
+        Подсказка видеофрагмент (gif):<br>
+    <div class="file-input-wrapper">
+        <button type="button" class="custom-button" onclick="document.getElementById('fileHint3').click()">Выбрать
+            файл
+        </button>
+        <input type="file" name="fileHint3" id="fileHint3" required accept="image/gif"
+               style="display: none;"
+               onchange="addFiles(this.files, 'file_hint3', 'fileHint3')">
+        <div id="file_hint3" class="file-list"></div>
+    </div>
+    <br>
+    </p>
+    <p>
+        Текстовая подсказка (картинка с текстом):<br>
+    <div class="file-input-wrapper">
+        <button type="button" class="custom-button" onclick="document.getElementById('fileHint4').click()">Выбрать
+            файл
+        </button>
+        <input type="file" name="fileHint4" id="fileHint4" required accept="image/png, image/jpeg"
+               style="display: none;"
+               onchange="addFiles(this.files, 'file_hint4', 'fileHint4')">
+        <div id="file_hint4" class="file-list"></div>
+    </div>
+    <br>
+    </p>
+    <div class="file-input-wrapper">
+        <input class="custom-button" type="submit" value="Добавить" required/>
+    </div>
+
+</form>
+
+{% endblock %}
+
+
+

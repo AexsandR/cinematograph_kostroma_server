@@ -57,13 +57,13 @@ class FormEdit:
     async def __edit_preview(self, filePreview: UploadFile) -> tuple[bool, int]:
         if filePreview.size == 0:
             return (True, -1)
-        res = await self.__addForm.add_preview(filePreview)
+        res = await self.__addForm.add_img(filePreview)
         return res
 
     async def __edit_frame(self, fileFrame: UploadFile) -> tuple[bool, int]:
         if fileFrame.size == 0:
             return (True, -1)
-        res = await self.__addForm.add_frame_novela(fileFrame)
+        res = await self.__addForm.add_img(fileFrame)
         return res
 
     async def __efit_film(self, id: int, name: str, description: str, id_preview: int, id_frame: int) -> bool:
@@ -77,7 +77,7 @@ class FormEdit:
             if id_frame != -1:
                 old_id_frame = film.frame_id
                 film.frame_id = id_frame
-                self.__apiFramesNovela.del_img(old_id_frame)
+                self.__apiImages.del_img(old_id_frame)
 
             if id_preview != -1:
                 old_id_preview = film.img_id
