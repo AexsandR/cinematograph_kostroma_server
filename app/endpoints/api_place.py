@@ -25,13 +25,15 @@ class ApiPlace:
                 Place(
                     id=place.id,
                     name_place=place.name_place,
-                    id_question=place.id_question,
                     latitude=place.latitude,
                     longitude=place.longitude,
                     radius=place.radius,
-                    img_id=place.img_id,
-                    fact_id=place.fact_id,
-                    hints_id=[img.id for img in place.hints],
+                    id_fact=place.fact_id,
+                    id_distorted_frame=place.id_distorted_frame,
+                    id_orig_frame=place.id_orig_frame,
+                    id_video=place.id_video,
+                    id_frame_text=place.id_frame_text,
+                    id_question=place.id_question,
                     last_modification=place.last_modification
                 )
             )

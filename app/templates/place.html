@@ -8,10 +8,14 @@
 
     {% for place in list_places %}
     <div class="card">
-        <div class="card_name">
+        <div class="card_name" style="margin: 10px">
             {{ place.name_place }}
         </div>
-        <img src="/api/get_images/{{ place.img_id }}" class="card_img">
+
+        <!--        <video controls style="max-width: 100%">-->
+<!--        <source src="/api/get_images/7" type="video/mp4">-->
+<!--        Ваш браузер не поддерживает HTML5 видео-->
+<!--        </video>-->
         <a class="button_win95 button_win95_a">удалить место</a>
         <a class="button_win95 button_win95_a">изменить место</a>
     </div>

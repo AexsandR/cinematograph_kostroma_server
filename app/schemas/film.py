@@ -1,10 +1,12 @@
 from pydantic import BaseModel
 from datetime import datetime
 
+
 class Film(BaseModel):
     id: int
-    id_img: int
-    id_frame: int
     name: str
-    description: str
+    id_img: int
+    introduction_id_img: int
+    conclusion_id_img: int
+    places_id: list[int]
     last_modification: datetime

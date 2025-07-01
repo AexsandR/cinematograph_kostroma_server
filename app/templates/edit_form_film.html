@@ -22,11 +22,6 @@
         Название фильма:
         <input class="input_text" name="name" value="{{ name }}" type="text"/>
     </p>
-    <p>
-        Описание фильма:<br/>
-        <textarea maxlength='300' class="text_area" name="description" required>{{ description }}</textarea>
-    </p>
-
 
     <p>
         Превью фильма:<br>
@@ -44,20 +39,34 @@
     </div>
     </p>
     <p>
-        Новела к фильму:<br>
-        <br>
-        <img class="edit_preview" src="/api/get_images/{{ id_frame }}">
-        <br>
+    <h4>Новела к фильму:</h4><br>
+    Вступленение
     <div class="file-input-wrapper">
-        <button type="button" class="custom-button" onclick="document.getElementById('fileFrame').click()">
-            Изменить кадр
+        <img class="edit_preview" src="/api/get_images/{{ introduction_id_img }}"><br>
+        <button type="button" class="custom-button" onclick="document.getElementById('fileIntroduction').click()">
+            Изменить файл
         </button>
-        <input type="file" name="fileFrame" id="fileFrame"
-               accept="image/png, image/gif, image/jpeg"
+        <input type="file" name="fileIntroduction" id="fileIntroduction"
+               accept="image/png, image/jpeg"
                style="display: none;"
-               onchange="addFiles(this.files, 'file_frame', 'fileFrame')">
-        <div id="file_frame" class="file-list"></div>
+               onchange="addFiles(this.files, 'file_introduction', 'fileIntroduction')">
+        <div id="file_introduction" class="file-list"></div>
     </div>
+    <br>
+    </p>
+    Концовка
+    <div class="file-input-wrapper">
+        <img class="edit_preview" src="/api/get_images/{{ conclusion_id_img }}"><br>
+        <button type="button" class="custom-button" onclick="document.getElementById('fileConclusion').click()">
+            Изменить файл
+        </button>
+        <input type="file" name="fileConclusion" id="fileConclusion"  accept="image/png, image/gif, image/jpeg"
+               style="display: none;"
+               onchange="addFiles(this.files, 'file_conclusion', 'fileConclusion')">
+        <div id="file_conclusion" class="file-list"></div>
+    </div>
+    <br>
+    </p>
 
     <div class="file-input-wrapper">
         <input class="custom-button" type="submit" value="Приянть изменеия" required/>

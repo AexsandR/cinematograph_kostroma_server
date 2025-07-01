@@ -23,13 +23,6 @@
         <input class="input_text" name="name" value="{{ name }}" type="text" required/>
     </p>
     <p>
-        Описание фильма:<br/>
-        <textarea maxlength='300' class="text_area" name="description" value="{{ description }}" multiple type="text"
-                  required no></textarea>
-    </p>
-
-
-    <p>
         Превью фильма:<br>
     <div class="file-input-wrapper">
         <button type="button" class="custom-button" onclick="document.getElementById('filePreview').click()">Выбрать
@@ -43,18 +36,30 @@
     </div>
     </p>
     <p>
-        Новела к фильму:<br>
+    <h4>Новела к фильму:</h4><br>
+    Вступленение
     <div class="file-input-wrapper">
-        <button type="button" class="custom-button" onclick="document.getElementById('fileFrame').click()">Выбрать
+        <button type="button" class="custom-button" onclick="document.getElementById('fileIntroduction').click()">Выбрать
             файл
         </button>
-        <input type="file" name="fileFrame" id="fileFrame" required accept="image/png, image/gif, image/jpeg"
+        <input type="file" name="fileIntroduction" id="fileIntroduction" required accept="image/png, image/gif, image/jpeg"
                style="display: none;"
-               onchange="addFiles(this.files, 'file_frame', 'fileFrame')">
-        <div id="file_frame" class="file-list"></div>
+               onchange="addFiles(this.files, 'file_introduction', 'fileIntroduction')">
+        <div id="file_introduction" class="file-list"></div>
     </div>
     <br>
-
+    </p>
+    Концовка
+    <div class="file-input-wrapper">
+        <button type="button" class="custom-button" onclick="document.getElementById('fileConclusion').click()">Выбрать
+            файл
+        </button>
+        <input type="file" name="fileConclusion" id="fileConclusion" required accept="image/png, image/gif, image/jpeg"
+               style="display: none;"
+               onchange="addFiles(this.files, 'file_conclusion', 'fileConclusion')">
+        <div id="file_conclusion" class="file-list"></div>
+    </div>
+    <br>
     </p>
     <div class="file-input-wrapper">
         <input class="custom-button" type="submit" value="Добавить" required/>

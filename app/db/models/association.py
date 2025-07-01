@@ -8,9 +8,3 @@ film_place_association = Table(
     Column('place_id', Integer, ForeignKey('Places.id'))
 )
 
-place_hint_association = Table(
-    'place_img_association',
-    SqlAlchemyBase.metadata,
-    Column('film_id', Integer, ForeignKey('Places.id')),
-    Column('hint_id', Integer, ForeignKey('Images.id'))
-)

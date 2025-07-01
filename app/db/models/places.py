@@ -12,16 +12,14 @@ class Places(SqlAlchemyBase):
     longitude: float = Column(Float, nullable=False)
     radius: float = Column(Float, nullable=False, default=25)
     fact_id: int = Column(Integer, ForeignKey("Images.id"), nullable=False)
-    img_id: int = Column(Integer, ForeignKey("Images.id"), nullable=False)
+    id_distorted_frame: int = Column(Integer, ForeignKey("Images.id"), nullable=False)
+    id_orig_frame: int = Column(Integer, ForeignKey("Images.id"), nullable=False)
+    id_video: int = Column(Integer, ForeignKey("Images.id"), nullable=False)
+    id_frame_text: int = Column(Integer, ForeignKey("Images.id"), nullable=False)
     last_modification: datetime = Column(DateTime, nullable=False, default=datetime.now)
     id_question: int = Column(Integer, ForeignKey("Questions.id"), nullable=False)
     films = relationship(
         "Films",
         secondary="film_place_association",
-        back_populates="places"
-    )
-    hints = relationship(
-        "Images",
-        secondary="place_img_association",
         back_populates="places"
     )

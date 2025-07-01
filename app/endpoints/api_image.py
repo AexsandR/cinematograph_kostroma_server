@@ -1,9 +1,10 @@
+from http.client import HTTPException
 from pprint import pprint
 
 from app.schemas.image import Image
 from app.schemas.error import Error
 from app.db import db_session
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 from fastapi.responses import Response, JSONResponse
 import base64
 from app.db.__all_models import *
@@ -33,7 +34,30 @@ class ApiImages:
         db_sess.close()
         return JSONResponse({"status": "200"})
 
-
     def __get_image(self, id_image: str) -> Response:
-        type_img, bin_data = self.__get_img_bin(int(id_image))
-        return Response(content=bin_data, media_type=type_img)
+        try:
+            media_type, bin_data = self.__get_img_bin(int(id_image))
+
+            if not media_type or not bin_data:
+                raise HTTPException(status_code=404, detail="Нет такого id")
+
+            headers = {
+                'Content-Length': str(len(bin_data)),
+                'Cache-Control': 'public, max-age=86400',
+            }
+
+            if media_type.startswith('video/'):
+                headers.update({
+                    'Accept-Ranges': 'bytes',
+                    'Content-Disposition': 'inline'
+                })
+            elif media_type.startswith('image/'):
+                headers['Content-Disposition'] = f'inline; filename="image_{id_image}.{media_type.split('/')[-1]}"'
+
+            return Response(
+                content=bin_data,
+                media_type=media_type,
+                headers=headers
+            )
+        except ValueError:
+            raise HTTPException(status_code=400, detail="Нет такого id")

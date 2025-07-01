@@ -23,24 +23,11 @@
     </p>
     <p>
         Широта:
-        <input type="number" class="input_text" name="latitude" />
+        <input type="number" class="input_text" name="latitude"/>
     </p>
     <p>
         Долгота:
-        <input type="number" class="input_text" name="longitude" />
-    </p>
-    <p>
-        Факт о месте:<br>
-    <div class="file-input-wrapper">
-        <button type="button" class="custom-button" onclick="document.getElementById('fileFact').click()">Выбрать
-            файл
-        </button>
-        <input name="fileFact" id="fileFact" type="file" required accept="image/png, image/jpeg"
-               style="display: none;"
-               onchange="addFiles(this.files, 'file_fact', 'fileFact')">
-
-        <div id="file_fact" class="file-list"></div>
-    </div>
+        <input type="number" class="input_text" name="longitude"/>
     </p>
     <p>
         Вопрос по месту:<br>
@@ -58,68 +45,69 @@
 
     </p>
     <p>
+        Факт о месте:<br>
+    <div class="file-input-wrapper">
+        <button type="button" class="custom-button" onclick="document.getElementById('fileFact').click()">
+            Выбрать файл
+        </button>
+        <input name="fileFact" id="fileFact" type="file" required accept="image/png"
+               style="display: none;"
+               onchange="addFiles(this.files, 'file_fact', 'fileFact')">
+
+        <div id="file_fact" class="file-list"></div>
+    </div>
+    </p>
+    <p>
         Искаженный кадр места:<br>
     <div class="file-input-wrapper">
-        <button type="button" class="custom-button" onclick="document.getElementById('filePreview').click()">Выбрать
-            файл
+        <button type="button" class="custom-button" onclick="document.getElementById('fileDistortedFrame').click()">
+            Выбрать файл
         </button>
-        <input name="filePreview" id="filePreview" type="file" required accept="image/png, image/jpeg"
+        <input name="fileDistortedFrame" id="fileDistortedFrame" type="file" required accept="image/png"
                style="display: none;"
-               onchange="addFiles(this.files, 'file_Preview', 'filePreview')">
+               onchange="addFiles(this.files, 'file_distortedFrame', 'fileDistortedFrame')">
 
-        <div id="file_Preview" class="file-list"></div>
+        <div id="file_distortedFrame" class="file-list"></div>
     </div>
     </p>
     <p>
-        Подсказки к фильму:<br>
-        Подсказка искаженный кадр места:<br>
+        Оригинальный кадр места:<br>
     <div class="file-input-wrapper">
-        <button type="button" class="custom-button" onclick="document.getElementById('fileHint1').click()">Выбрать
+        <button type="button" class="custom-button" onclick="document.getElementById('fileFrame').click()">Выбрать
             файл
         </button>
-        <input type="file" name="fileHint1" id="fileHint1" required accept="image/png, image/jpeg"
+        <input type="file" name="fileFrame" id="fileFrame" required accept="image/png, image/jpeg"
                style="display: none;"
-               onchange="addFiles(this.files, 'file_hint1', 'fileHint1')">
-        <div id="file_hint1" class="file-list"></div>
-    </div>
-    <br>
-    </p>
-    <p>
-        Подсказка оригинальный кадр:<br>
-    <div class="file-input-wrapper">
-        <button type="button" class="custom-button" onclick="document.getElementById('fileHint2').click()">Выбрать
-            файл
-        </button>
-        <input type="file" name="fileHint2" id="fileHint2" required accept="image/png, image/jpeg"
-               style="display: none;"
-               onchange="addFiles(this.files, 'file_hint2', 'fileHint2')">
-        <div id="file_hint2" class="file-list"></div>
+               onchange="addFiles(this.files, 'file_frame', 'fileFrame')">
+        <div id="file_frame" class="file-list"></div>
     </div>
     <br>
     </p>
+
+    </p>
     <p>
-        Подсказка видеофрагмент (gif):<br>
+        Видеофрагмент (gif):<br>
     <div class="file-input-wrapper">
-        <button type="button" class="custom-button" onclick="document.getElementById('fileHint3').click()">Выбрать
+        <button type="button" class="custom-button" onclick="document.getElementById('fileVideo').click()">Выбрать
             файл
         </button>
-        <input type="file" name="fileHint3" id="fileHint3" required accept="image/gif"
+        <input type="file" name="fileVideo" id="fileVideo" required accept="video/mp4"
                style="display: none;"
-               onchange="addFiles(this.files, 'file_hint3', 'fileHint3')">
-        <div id="file_hint3" class="file-list"></div>
+               onchange="addFiles(this.files, 'file_video', 'fileVideo')">
+        <div id="file_video" class="file-list"></div>
     </div>
     <br>
     </p>
     <p>
         Текстовая подсказка (картинка с текстом):<br>
     <div class="file-input-wrapper">
-        <button type="button" class="custom-button" onclick="document.getElementById('fileHint4').click()">Выбрать
+        <button type="button" class="custom-button" onclick="document.getElementById('fileFrameText').click()">Выбрать
             файл
         </button>
-        <input type="file" name="fileHint4" id="fileHint4" required accept="image/png, image/jpeg"
+        <input type="file" name="fileFrameText" id="fileFrameText" required accept="image/png, image/jpeg"
                style="display: none;"
-               onchange="addFiles(this.files, 'file_hint4', 'fileHint4')">
-        <div id="file_hint4" class="file-list"></div>
+               onchange="addFiles(this.files, 'file_frameText', 'fileFrameText')">
+        <div id="file_frameText" class="file-list"></div>
     </div>
     <br>
     </p>

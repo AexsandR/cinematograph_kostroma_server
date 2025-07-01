@@ -25,64 +25,74 @@ class FormEdit:
             return self.__templates.TemplateResponse("edit_form_film.html",
                                                      {"request": request, "error": False, "type": "film",
                                                       "id": id,
-                                                      "name": film.name, "description": film.description,
+                                                      "name": film.name,
                                                       "id_img": film.id_img,
-                                                      "id_frame": film.id_frame
+                                                      "introduction_id_img": film.introduction_id_img,
+                                                      "conclusion_id_img": film.conclusion_id_img,
                                                       })
         except Exception as err:
             print(f"Ошибка в показе форме на изменеия фильма:\n\t{err}")
             return RedirectResponse("/", status_code=303)
 
-    async def __get_form_film(self, request: Request,
-                              id: str, name: str = Form(...),
-                              description: str = Form(...),
+    async def __get_form_film(self, request: Request, id: str, name: str = Form(...),
                               filePreview: UploadFile = File(...),
-                              fileFrame: UploadFile = File(...),
+                              fileIntroduction: UploadFile = File(...),
+                              fileConclusion: UploadFile = File(...),
                               ) -> RedirectResponse | HTMLResponse:
-        res = await self.__edit_preview(filePreview)
+        res = await self.__edit_img(filePreview)
         success, id_preview = res
-        res = await self.__edit_frame(fileFrame)
-        success1, id_frame = res
-        success2 = await self.__efit_film(int(id), name, description, id_preview, id_frame)
-        if success and success1 and success2:
+        res = await self.__edit_img(fileIntroduction)
+        success1, id_introduction = res
+        res = await self.__edit_img(fileConclusion)
+        success2, id_conclusion = res
+        success3 = await self.__efit_film(int(id), name, id_preview, id_introduction, id_conclusion)
+        if success and success1 and success2 and success3:
             return RedirectResponse("/", status_code=303)
-
+        film = self.__apiFilm.get_film(id)
+        if success:
+            self.__apiImages.del_img(id_preview)
+        if success1:
+            self.__apiImages.del_img(id_introduction)
+        if success2:
+            self.__apiImages.del_img(id_conclusion)
         return self.__templates.TemplateResponse("edit_form_film.html",
                                                  {"request": request, "error": False, "type": "film",
-                                                  "name": name, "description": description,
-                                                  "id_img": id_preview,
-                                                  "id_frame": id_frame
+                                                  "id": id,
+                                                  "name": film.name,
+                                                  "id_img": film.id_img,
+                                                  "introduction_id_img": film.introduction_id_img,
+                                                  "conclusion_id_img": film.conclusion_id_img,
                                                   })
 
-    async def __edit_preview(self, filePreview: UploadFile) -> tuple[bool, int]:
+    async def __edit_img(self, filePreview: UploadFile) -> tuple[bool, int]:
         if filePreview.size == 0:
             return (True, -1)
         res = await self.__addForm.add_img(filePreview)
         return res
 
-    async def __edit_frame(self, fileFrame: UploadFile) -> tuple[bool, int]:
-        if fileFrame.size == 0:
-            return (True, -1)
-        res = await self.__addForm.add_img(fileFrame)
-        return res
-
-    async def __efit_film(self, id: int, name: str, description: str, id_preview: int, id_frame: int) -> bool:
+    async def __efit_film(self, id: int, name: str, id_preview: int, id_introduction: int,
+                          id_conclusion: int, ) -> bool:
         db_sess = db_session.create_session()
-        old_id_frame: int = -1
-        old_id_preview: int = -1
+        print(id_introduction)
+        print(id_conclusion)
+
         try:
             film = db_sess.query(Films).filter(Films.id == id).first()
             film.name = name
-            film.description = description
-            if id_frame != -1:
-                old_id_frame = film.frame_id
-                film.frame_id = id_frame
-                self.__apiImages.del_img(old_id_frame)
-
             if id_preview != -1:
-                old_id_preview = film.img_id
+                old_id_preview: int = film.img_id
                 film.img_id = id_preview
                 self.__apiImages.del_img(old_id_preview)
+            if id_introduction != -1:
+                old_id_introduction: int = film.introduction_id_img
+                print(id_introduction)
+                film.introduction_id_img = id_introduction
+                self.__apiImages.del_img(old_id_introduction)
+            if id_conclusion != -1:
+                old_id_conclusion: int = film.conclusion_id_img
+                film.conclusion_id_img = id_conclusion
+                self.__apiImages.del_img(old_id_conclusion)
+
             db_sess.commit()
             db_sess.close()
             return True
