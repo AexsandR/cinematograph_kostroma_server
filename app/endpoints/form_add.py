@@ -1,16 +1,17 @@
-from pkgutil import resolve_name
-
 from fastapi import APIRouter, UploadFile, Request, File, Form
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse, RedirectResponse
 from app.db import db_session
-from app.db.__all_models import Images, Films, Questions, Places
-from app.schemas.place import Place
+from app.db.__all_models import Media, Films, Questions, Places
+from .api_media import ApiMedia
+from ..db.models.conclusion import Conclusion
+from ..db.models.introduction import Introduction
 
 
 class FormAdd:
     def __init__(self, ):
         self.__templates = Jinja2Templates(directory="app/templates")
+        self.__apiMedia = ApiMedia()
         self.router = APIRouter(prefix="/addForm")
         self.router.add_api_route("/film", self.__get_form_film, methods=["POST"], response_model=None)
         self.router.add_api_route("/film", self.__show_form_film, methods=["GET"])
@@ -49,7 +50,8 @@ class FormAdd:
         success4, id_video = res
         res = await self.add_img(fileFrameText)
         success5, id_frameText = res
-        res = await  self.add_place(int(id_film), name_place, longitude, latitude, id_question, id_fact, id_distortedFrame, id_frame,
+        res = await  self.add_place(int(id_film), name_place, longitude, latitude, id_question, id_fact,
+                                    id_distortedFrame, id_frame,
                                     id_video, id_frameText)
         success6 = res
         if success and success1 and success2 and success3 and success4 and success5 and success6:
@@ -82,14 +84,20 @@ class FormAdd:
     async def __get_form_film(self, request: Request, name: str = Form(...),
                               filePreview: UploadFile = File(...),
                               fileIntroduction: UploadFile = File(...),
+                              filAudioIntroduction: UploadFile = File(...),
                               fileConclusion: UploadFile = File(...),
+                              fileAudioConclusion: UploadFile = File(...)
                               ) -> RedirectResponse | HTMLResponse:
-        res = await self.add_img(filePreview)
+        res = await self.__apiMedia.add_media(filePreview)
         success, id_preview = res
-        res = await self.add_img(fileIntroduction)
+        res = await self.__add_introduction_conclusion(Introduction, fileIntroduction, filAudioIntroduction)
         success1, id_introduction = res
-        res = await self.add_img(fileConclusion)
+        res = await self.__add_introduction_conclusion(Conclusion, fileConclusion, fileAudioConclusion)
         success2, id_conclusion = res
+        print("*" * 100)
+        print(id_introduction)
+        print(id_conclusion)
+        print("*" * 100)
         success3 = await self.add_film(name, id_preview, id_introduction, id_conclusion)
         if success and success1 and success2 and success3:
             return RedirectResponse("/", status_code=303)
@@ -97,25 +105,30 @@ class FormAdd:
                                                  {"request": request, "name": name,
                                                   "error": True})
 
-    async def add_img(self, file: UploadFile) -> tuple[bool, int]:
-        db_sess = db_session.create_session()
-        try:
-            img = Images()
-            file_data = await file.read()
-            img.type = file.content_type
-            if isinstance(file_data, str):
-                img.bin_data = file_data.encode('latin1')  # сохраняет бинарные данные без потерь
-            elif isinstance(file_data, bytes):
-                img.bin_data = file_data
-            db_sess.add(img)
-            db_sess.commit()
-            id: int = img.id
-            db_sess.close()
-        except Exception as err:
-            db_sess.close()
-            print(f"Ошиибка на добавление картинки:\n\t{err}")
-            return (False, -1)
-        return (True, id)
+    async def __add_introduction_conclusion(self, Class, file: UploadFile, audio: UploadFile) -> tuple[bool, int]:
+        res = await self.__apiMedia.add_media(file)
+        success, id_media_img = res
+        res = await self.__apiMedia.add_media(audio)
+        success1, id_media_audio = res
+        if success and success1:
+            db_sess = db_session.create_session()
+            try:
+                introduction = Class()
+                introduction.id_img = id_media_img
+                introduction.id_audio = id_media_audio
+                db_sess.add(introduction)
+                db_sess.commit()
+                id: int = introduction.id
+                db_sess.close()
+                return (True, id)
+            except Exception as err:
+                print(f"Ошибка при добавлении {Class}:\n\t{err}")
+                db_sess.close()
+        if success:
+            self.__apiMedia.del_media(id_media_img)
+        if success1:
+            self.__apiMedia.del_media(id_media_audio)
+        return (False, -1)
 
     async def add_film(self, name: str, id_preview: int, id_introduction: int, id_conclusion: int) -> bool:
         db_sess = db_session.create_session()
@@ -123,8 +136,8 @@ class FormAdd:
             film = Films()
             film.img_id = id_preview
             film.name = name
-            film.introduction_id_img = id_introduction
-            film.conclusion_id_img = id_conclusion
+            film.id_introduction = id_introduction
+            film.id_conclusion = id_conclusion
             db_sess.add(film)
             db_sess.commit()
             db_sess.close()

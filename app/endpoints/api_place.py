@@ -42,19 +42,19 @@ class ApiPlace:
         return response
 
 
-def del_place(self, id_place: str) -> RedirectResponse:
-    db_sess = db_session.create_session()
-    try:
-        film: Films = db_sess.query(Films).filter(Films.id == str(id)).first()
-        preview: Images = db_sess.query(Images).filter(Images.id == film.img_id).first()
-        frame: Images = db_sess.query(Images).filter(Images.id == film.frame_id).first()
-        db_sess.delete(film)
-        db_sess.delete(preview)
-        db_sess.delete(frame)
-        db_sess.commit()
-        db_sess.close()
-        return RedirectResponse("/", status_code=303)
-    except Exception as err:
-        print(f"Ошибка в удалении фильма:\n\t{err}")
-        db_sess.close()
-        return RedirectResponse("/", status_code=404)
+# def del_place(self, id_place: str) -> RedirectResponse:
+#     db_sess = db_session.create_session()
+#     try:
+#         film: Films = db_sess.query(Films).filter(Films.id == str(id)).first()
+#         preview: Media = db_sess.query(Media).filter(Media.id == film.img_id).first()
+#         frame: Media = db_sess.query(Media).filter(Media.id == film.frame_id).first()
+#         db_sess.delete(film)
+#         db_sess.delete(preview)
+#         db_sess.delete(frame)
+#         db_sess.commit()
+#         db_sess.close()
+#         return RedirectResponse("/", status_code=303)
+#     except Exception as err:
+#         print(f"Ошибка в удалении фильма:\n\t{err}")
+#         db_sess.close()
+#         return RedirectResponse("/", status_code=404)

@@ -26,6 +26,12 @@
     aspect-ratio: 16 / 9;
     width: 100%;
 }
+
+.card_img_v{
+    padding: 10px;
+    aspect-ratio: 9/16;
+    width: 100%;
+}
 .card_text{
     width: 100%;
 }

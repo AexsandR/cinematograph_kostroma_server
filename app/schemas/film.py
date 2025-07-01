@@ -6,7 +6,7 @@ class Film(BaseModel):
     id: int
     name: str
     id_img: int
-    introduction_id_img: int
-    conclusion_id_img: int
-    places_id: list[int]
+    id_introduction: int
+    id_conclusion: int
+    id_places: list[int]
     last_modification: datetime

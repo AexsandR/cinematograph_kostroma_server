@@ -18,9 +18,6 @@ class PageController:
                                                  {"request": request, "list_film": self.__apiFilm.get_films()})
 
     def __return_place_page(self, request: Request, id_film: str):
-        print(self.__apiPlace.get_places(int(id_film)))
-        print(type(self.__apiPlace.get_places(int(id_film))))
-        print(len(self.__apiPlace.get_places(int(id_film))))
         return self.__templates.TemplateResponse("place.html",
                                                  {"request": request, "id": id_film,
                                                   "list_places": self.__apiPlace.get_places(int(id_film))})
