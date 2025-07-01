@@ -1,5 +1,4 @@
-from .models.introduction import Introduction
-from .models.conclusion import Conclusion
+from .models.img_with_audio import ImgWithAudio
 from .models.questions import Questions
 from .models.films import Films
 from .models.places import Places

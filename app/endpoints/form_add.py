@@ -4,8 +4,7 @@ from fastapi.responses import HTMLResponse, RedirectResponse
 from app.db import db_session
 from app.db.__all_models import Media, Films, Questions, Places
 from .api_media import ApiMedia
-from ..db.models.conclusion import Conclusion
-from ..db.models.introduction import Introduction
+from ..db.models.img_with_audio import ImgWithAudio
 
 
 class FormAdd:
@@ -33,6 +32,7 @@ class FormAdd:
                                answer2: str = Form(...),
                                answer3: str = Form(...),
                                answer4: str = Form(...),
+                               fileAudioFact: UploadFile = Form(...),
                                fileFact: UploadFile = File(...),
                                fileDistortedFrame: UploadFile = File(...),
                                fileFrame: UploadFile = File(...),
@@ -40,16 +40,17 @@ class FormAdd:
                                fileFrameText: UploadFile = File(...)) -> RedirectResponse | HTMLResponse:
         res = await self.add_question(question, answer1, answer2, answer3, answer4)
         success, id_question = res
-        res = await self.add_img(fileFact)
-        success1, id_fact = res
-        res = await self.add_img(fileDistortedFrame)
-        success2, id_distortedFrame = res
-        res = await self.add_img(fileFrame)
-        success3, id_frame = res
-        res = await self.add_img(fileVideo)
-        success4, id_video = res
-        res = await self.add_img(fileFrameText)
-        success5, id_frameText = res
+        res = await self.__apiMedia.add_media(fileDistortedFrame)
+        success1, id_distortedFrame = res
+        res = await self.__apiMedia.add_media(fileFrame)
+        success2, id_frame = res
+        res = await self.__apiMedia.add_media(fileVideo)
+        success3, id_video = res
+        res = await self.__apiMedia.add_media(fileFrameText)
+        success4, id_frameText = res
+        res = await self.__add_img_with_audio(fileFact, fileAudioFact)
+        success5, id_fact = res
+
         res = await  self.add_place(int(id_film), name_place, longitude, latitude, id_question, id_fact,
                                     id_distortedFrame, id_frame,
                                     id_video, id_frameText)
@@ -90,14 +91,10 @@ class FormAdd:
                               ) -> RedirectResponse | HTMLResponse:
         res = await self.__apiMedia.add_media(filePreview)
         success, id_preview = res
-        res = await self.__add_introduction_conclusion(Introduction, fileIntroduction, filAudioIntroduction)
+        res = await self.__add_img_with_audio(fileIntroduction, filAudioIntroduction)
         success1, id_introduction = res
-        res = await self.__add_introduction_conclusion(Conclusion, fileConclusion, fileAudioConclusion)
+        res = await self.__add_img_with_audio(fileConclusion, fileAudioConclusion)
         success2, id_conclusion = res
-        print("*" * 100)
-        print(id_introduction)
-        print(id_conclusion)
-        print("*" * 100)
         success3 = await self.add_film(name, id_preview, id_introduction, id_conclusion)
         if success and success1 and success2 and success3:
             return RedirectResponse("/", status_code=303)
@@ -105,7 +102,7 @@ class FormAdd:
                                                  {"request": request, "name": name,
                                                   "error": True})
 
-    async def __add_introduction_conclusion(self, Class, file: UploadFile, audio: UploadFile) -> tuple[bool, int]:
+    async def __add_img_with_audio(self, file: UploadFile, audio: UploadFile) -> tuple[bool, int]:
         res = await self.__apiMedia.add_media(file)
         success, id_media_img = res
         res = await self.__apiMedia.add_media(audio)
@@ -113,16 +110,16 @@ class FormAdd:
         if success and success1:
             db_sess = db_session.create_session()
             try:
-                introduction = Class()
-                introduction.id_img = id_media_img
-                introduction.id_audio = id_media_audio
-                db_sess.add(introduction)
+                imgWithAudio = ImgWithAudio()
+                imgWithAudio.id_img = id_media_img
+                imgWithAudio.id_audio = id_media_audio
+                db_sess.add(imgWithAudio)
                 db_sess.commit()
-                id: int = introduction.id
+                id: int = imgWithAudio.id
                 db_sess.close()
                 return (True, id)
             except Exception as err:
-                print(f"Ошибка при добавлении {Class}:\n\t{err}")
+                print(f"Ошибка при добавлении imgWithAudio:\n\t{err}")
                 db_sess.close()
         if success:
             self.__apiMedia.del_media(id_media_img)

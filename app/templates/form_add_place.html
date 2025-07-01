@@ -58,6 +58,20 @@
     </div>
     </p>
     <p>
+        Озвучка факта
+    <div class="file-input-wrapper">
+        <button type="button" class="custom-button" onclick="document.getElementById('fileAudioFact').click()">
+            Выбрать
+            файл
+        </button>
+        <input type="file" name="fileAudioFact" id="fileAudioFact" required accept="audio/mpeg"
+               style="display: none;"
+               onchange="addFiles(this.files, 'file_audio_fact', 'fileAudioFact')">
+        <div id="file_audio_fact" class="file-list"></div>
+    </div>
+    <br>
+    </p>
+    <p>
         Искаженный кадр места:<br>
     <div class="file-input-wrapper">
         <button type="button" class="custom-button" onclick="document.getElementById('fileDistortedFrame').click()">

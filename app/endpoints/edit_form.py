@@ -3,14 +3,11 @@ from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse, RedirectResponse
 from app.db import db_session
 from app.db.__all_models import Films
-from app.db.models.conclusion import Conclusion
 from app.endpoints.api_films import ApiFilms
 from app.endpoints.form_add import FormAdd
 from app.endpoints.api_media import ApiMedia
-from app.endpoints.api_introduction import ApiIntroduction
-from app.endpoints.api_conclusion import ApiConclusion
-from app.db.models.introduction import Introduction
-from app.db.models.conclusion import Conclusion
+from app.endpoints.api_img_with_audio import ApiImgWithAudio
+from app.db.models.img_with_audio import ImgWithAudio
 
 
 class FormEdit:
@@ -22,14 +19,13 @@ class FormEdit:
         self.__apiFilm = ApiFilms()
         self.__addForm = FormAdd()
         self.__apiMedia = ApiMedia()
-        self.__apiIntroduction = ApiIntroduction()
-        self.__apiConclusion = ApiConclusion()
+        self.__apiImgWithAudio = ApiImgWithAudio()
 
     def __show_form_film(self, request: Request, id: str) -> HTMLResponse | RedirectResponse:
         try:
             film = self.__apiFilm.get_film(id)
-            introduction: Introduction = self.__apiIntroduction.get_introduction(str(film.id_introduction))
-            conclusion: Conclusion = self.__apiConclusion.get_conclusion(str(film.id_conclusion))
+            introduction: ImgWithAudio = self.__apiImgWithAudio.get_obj(str(film.id_introduction))
+            conclusion: ImgWithAudio = self.__apiImgWithAudio.get_obj(str(film.id_conclusion))
             return self.__templates.TemplateResponse("edit_form_film.html",
                                                      {"request": request, "error": False, "type": "film",
                                                       "id": id,
@@ -52,26 +48,26 @@ class FormEdit:
                               fileAudioConclusion: UploadFile = File(...)
                               ) -> RedirectResponse | HTMLResponse:
         res = await self.__edit_media(filePreview)
-        print(res)
         success, id_preview = res
-        success1 = await self.__efit_film(int(id), name, id_preview)
+        success1 = await self.__edit_film(int(id), name, id_preview)
         if success and success1:
-            await self.edit_introduction_conclusion(int(id), Introduction, fileIntroduction, filAudioIntroduction)
-            await self.edit_introduction_conclusion(int(id), Conclusion, fileConclusion, fileAudioConclusion)
+            db_sess = db_session.create_session()
+            id_introduction = db_sess.query(Films).filter(Films.id == int(id)).first().id_introduction
+            id_conclusion = db_sess.query(Films).filter(Films.id == int(id)).first().id_conclusion
+            db_sess.close()
+            await self.edit_obj(id_introduction, fileIntroduction, filAudioIntroduction)
+            await self.edit_obj(id_conclusion, fileConclusion, fileAudioConclusion)
             return RedirectResponse(f"/", status_code=303)
-        print(success)
-        print(success1)
         return RedirectResponse(f"/editForm/film/{id}", status_code=303)
 
-    async def edit_introduction_conclusion(self, id: int, Class, img: UploadFile, audio: UploadFile) -> bool:
+    async def edit_obj(self, id: int, img: UploadFile, audio: UploadFile) -> bool:
         res = await self.__edit_media(img)
         success, id_img = res
         res = await self.__edit_media(audio)
         success1, id_audio = res
         if success and success1:
             db_sess = db_session.create_session()
-            obj = db_sess.query(Class).filter(Class.id == id).first()
-            print(id_img, id_audio)
+            obj = db_sess.query(ImgWithAudio).filter(ImgWithAudio.id == id).first()
             if id_img != -1:
                 old_id = obj.id_img
                 obj.id_img = id_img
@@ -89,7 +85,7 @@ class FormEdit:
         res = await self.__apiMedia.add_media(file)
         return res
 
-    async def __efit_film(self, id: int, name, id_preview: int) -> bool:
+    async def __edit_film(self, id: int, name, id_preview: int) -> bool:
         db_sess = db_session.create_session()
         try:
             film = db_sess.query(Films).filter(Films.id == id).first()

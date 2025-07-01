@@ -9,8 +9,8 @@ class Films(SqlAlchemyBase):
     id: int = Column(Integer, primary_key=True, autoincrement=True)
     name: str = Column(String(150), unique=True, nullable=False)
     img_id: int = Column(Integer, ForeignKey("Media.id"), nullable=False)
-    id_introduction: int = Column(Integer, ForeignKey("Introductions.id"), nullable=True)
-    id_conclusion: int = Column(Integer, ForeignKey("Conclusions.id"), nullable=True)
+    id_introduction: int = Column(Integer, ForeignKey("ImgWithAudios.id"), nullable=True)
+    id_conclusion: int = Column(Integer, ForeignKey("ImgWithAudios.id"), nullable=True)
     last_modification: datetime = Column(DateTime, nullable=False, default=datetime.now)
     places = relationship(
         "Places",
