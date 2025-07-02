@@ -52,7 +52,7 @@
         <br>
     <div class="file-input-wrapper">
         <button type="button" class="custom-button" onclick="document.getElementById('fileFact').click()">
-            Выбрать файл
+            Изменить файл
         </button>
         <input name="fileFact" id="fileFact" type="file" accept="image/png"
                style="display: none;"
@@ -70,7 +70,7 @@
         <br>
     <div class="file-input-wrapper">
         <button type="button" class="custom-button" onclick="document.getElementById('fileAudioFact').click()">
-            Выбрать
+            Изменить
             файл
         </button>
         <input type="file" name="fileAudioFact" id="fileAudioFact" accept="audio/mpeg"
@@ -85,7 +85,7 @@
         <img class="card_img_v" src="/api/get_media/{{ id_distorted_frame }}"><br>
     <div class="file-input-wrapper">
         <button type="button" class="custom-button" onclick="document.getElementById('fileDistortedFrame').click()">
-            Выбрать файл
+            Изменить файл
         </button>
         <input name="fileDistortedFrame" id="fileDistortedFrame" type="file" accept="image/png"
                style="display: none;"
@@ -99,7 +99,7 @@
         <img class="edit_preview" src="/api/get_media/{{ id_orig_frame }}"><br>
 
     <div class="file-input-wrapper">
-        <button type="button" class="custom-button" onclick="document.getElementById('fileFrame').click()">Выбрать
+        <button type="button" class="custom-button" onclick="document.getElementById('fileFrame').click()">Изменить
             файл
         </button>
         <input type="file" name="fileFrame" id="fileFrame" accept="image/png, image/jpeg"
@@ -119,7 +119,7 @@
         </video>
         <br>
     <div class="file-input-wrapper">
-        <button type="button" class="custom-button" onclick="document.getElementById('fileVideo').click()">Выбрать
+        <button type="button" class="custom-button" onclick="document.getElementById('fileVideo').click()">Изменить
             файл
         </button>
         <input type="file" name="fileVideo" id="fileVideo" accept="video/mp4"
@@ -133,7 +133,7 @@
         Текстовая подсказка (картинка с текстом):<br>
         <img class="card_img_v" src="/api/get_media/{{ id_frame_text }} "><br>
     <div class="file-input-wrapper">
-        <button type="button" class="custom-button" onclick="document.getElementById('fileFrameText').click()">Выбрать
+        <button type="button" class="custom-button" onclick="document.getElementById('fileFrameText').click()">Изменить
             файл
         </button>
         <input type="file" name="fileFrameText" id="fileFrameText" accept="image/png, image/jpeg"
@@ -144,7 +144,7 @@
     <br>
     </p>
     <div class="file-input-wrapper">
-        <input class="custom-button" type="submit" value="Добавить" required/>
+        <input class="custom-button" type="submit" value="Применить" required/>
     </div>
 
 </form>

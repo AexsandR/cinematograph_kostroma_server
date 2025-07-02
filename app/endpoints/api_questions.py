@@ -38,3 +38,11 @@ class ApiQuestions:
         id: int = question_db.id
         db_sess.close()
         return (True, id)
+
+    def del_question(self, id: int):
+        db_sess = db_session.create_session()
+        obj = db_sess.query(Questions).filter(Questions.id == id).first()
+        if obj:
+            db_sess.delete(obj)
+            db_sess.commit()
+        db_sess.close()

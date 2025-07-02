@@ -11,7 +11,7 @@
         <div class="card_name" style="margin: 10px">
             {{ place.name_place }}
         </div>
-        <a class="button_win95 button_win95_a">удалить место</a>
+        <a class="button_win95 button_win95_a" href="/api/del_place/{{id}}/{{place.id}}">удалить место</a>
         <a class="button_win95 button_win95_a" href="/editForm/place/{{id}}">изменить место</a>
     </div>
     {% endfor %}

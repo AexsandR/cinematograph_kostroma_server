@@ -9,7 +9,6 @@ from app.db.models.places import Places
 from app.db.models.questions import Questions
 from app.schemas.question import Question
 from app.endpoints.api_films import ApiFilms
-from app.endpoints.form_add import FormAdd
 from app.endpoints.api_media import ApiMedia
 from app.endpoints.api_img_with_audio import ApiImgWithAudio
 from app.db.models.img_with_audio import ImgWithAudio
@@ -27,7 +26,6 @@ class FormEdit:
         self.router.add_api_route("/place/{id}", self.__show_form_place, methods=["GET"], response_model=None)
         self.router.add_api_route("/place/{id}", self.__get_form_place, methods=["POST"], response_model=None)
         self.__apiFilm = ApiFilms()
-        self.__addForm = FormAdd()
         self.__apiMedia = ApiMedia()
         self.__apiImgWithAudio = ApiImgWithAudio()
         self.__apiPlace = ApiPlace()
