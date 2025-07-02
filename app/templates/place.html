@@ -11,13 +11,8 @@
         <div class="card_name" style="margin: 10px">
             {{ place.name_place }}
         </div>
-
-        <!--        <video controls style="max-width: 100%">-->
-<!--        <source src="/api/get_images/7" type="video/mp4">-->
-<!--        Ваш браузер не поддерживает HTML5 видео-->
-<!--        </video>-->
         <a class="button_win95 button_win95_a">удалить место</a>
-        <a class="button_win95 button_win95_a">изменить место</a>
+        <a class="button_win95 button_win95_a" href="/editForm/place/{{id}}">изменить место</a>
     </div>
     {% endfor %}
 </div>

@@ -51,15 +51,15 @@ class ApiFilms:
         db_sess = db_session.create_session()
         try:
             film = db_sess.query(Films).filter(Films.id == int(id)).first()
-            places_id = [place.id for place in film.places]
+            response = Film(id=film.id,
+                            name=film.name,
+                            id_img=film.img_id,
+                            id_introduction=film.id_introduction,
+                            id_conclusion=film.id_conclusion,
+                            id_places=[place.id for place in film.places],
+                            last_modification=film.last_modification)
             db_sess.close()
-            return Film(id=film.id,
-                        name=film.name,
-                        id_img=film.img_id,
-                        id_introduction=film.id_introduction,
-                        id_conclusion=film.id_conclusion,
-                        id_places=[place.id for place in film.places],
-                        last_modification=film.last_modification)
+            return response
         except Exception as err:
             print(f"Ошибка в получения фильма по id:\n\t{err}")
             print(err)

@@ -26,4 +26,10 @@
     </div>
 </div>
 </body>
+<script>
+    // Добавляем timestamp ко всем изображениям
+    document.querySelectorAll('img').forEach(img => {
+        img.src = img.src.split('?')[0] + '?t=' + Date.now();
+    });
+</script>
 </html>

@@ -5,7 +5,6 @@ from pydantic.types import StringConstraints
 
 
 class Place(BaseModel):
-    id: int
     name_place: Annotated[str, StringConstraints(max_length=300)]
     id_question: int
     latitude: float

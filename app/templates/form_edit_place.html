@@ -9,7 +9,7 @@
         display: inline-block
     }
 </style>
-<form method="post" action="/addForm/place/{{id}}" enctype="multipart/form-data">
+<form method="post" action="/editForm/place/{{id}}" enctype="multipart/form-data">
     <div class="file-input-wrapper">
         <a href="/" class="custom-button" style="width: 100%">назад</a>
     </div>
@@ -19,40 +19,42 @@
     {% endif %}
     <p>
         Название места:
-        <input class="input_text" name="name_place" type="text" required/>
+        <input class="input_text" name="name_place" value="{{name_place}}" type="text"/>
     </p>
     <p>
         Широта:
-        <input type="number" class="input_text" name="latitude" min="-90" max="90"
+        <input type="number" class="input_text" name="latitude" value="{{latitude}}" min="-90" max="90"
                step="0.0000001"/>
     </p>
     <p>
         Долгота:
-        <input type="number" class="input_text" name="longitude" min="-90" max="90"
+        <input type="number" class="input_text" name="longitude" value="{{longitude}}" min="-90" max="90"
                step="0.0000001"/>
     </p>
     <p>
         Вопрос по месту:<br>
         <textarea class="text_area" name="question" multiple type="text"
-                  required no></textarea>
+                  no>{{question}}</textarea>
     </p>
     <p>
 
         Ответ (Первый вариант это правильный ответ. Если вам нужно,чтоб игрок вводил ответ то заполните только первое
         поле.):<br>
-        <input class="input_text" name="answer1" type="text" required/> <br><br>
-        <input class="input_text" name="answer2" type="text"/><br><br>
-        <input class="input_text" name="answer3" type="text"/><br><br>
-        <input class="input_text" name="answer4" type="text"/><br>
+        <input class="input_text" name="answer1" value="{{answer1}}" type="text"/> <br><br>
+        <input class="input_text" name="answer2" value="{{answer2}}" type="text"/><br><br>
+        <input class="input_text" name="answer3" value="{{answer3}}" type="text"/><br><br>
+        <input class="input_text" name="answer4" value="{{answer4}}" type="text"/><br>
 
     </p>
     <p>
         Факт о месте:<br>
+        <img class="card_img_v" src="/api/get_media/{{ id_fact_img }}">
+        <br>
     <div class="file-input-wrapper">
         <button type="button" class="custom-button" onclick="document.getElementById('fileFact').click()">
-            Изменить файл
+            Выбрать файл
         </button>
-        <input name="fileFact" id="fileFact" type="file" required accept="image/png"
+        <input name="fileFact" id="fileFact" type="file" accept="image/png"
                style="display: none;"
                onchange="addFiles(this.files, 'file_fact', 'fileFact')">
 
@@ -60,13 +62,18 @@
     </div>
     </p>
     <p>
-        Озвучка факта
+        Озвучка факта<br>
+        <audio controls>
+            <source src="/api/get_media/{{ id_fact_audio }}" type="audio/mpeg">
+            Ваш браузер не поддерживает элемент audio.
+        </audio>
+        <br>
     <div class="file-input-wrapper">
         <button type="button" class="custom-button" onclick="document.getElementById('fileAudioFact').click()">
-            Изменить
+            Выбрать
             файл
         </button>
-        <input type="file" name="fileAudioFact" id="fileAudioFact" required accept="audio/mpeg"
+        <input type="file" name="fileAudioFact" id="fileAudioFact" accept="audio/mpeg"
                style="display: none;"
                onchange="addFiles(this.files, 'file_audio_fact', 'fileAudioFact')">
         <div id="file_audio_fact" class="file-list"></div>
@@ -75,11 +82,12 @@
     </p>
     <p>
         Искаженный кадр места:<br>
+        <img class="card_img_v" src="/api/get_media/{{ id_distorted_frame }}"><br>
     <div class="file-input-wrapper">
         <button type="button" class="custom-button" onclick="document.getElementById('fileDistortedFrame').click()">
-            Изменить файл
+            Выбрать файл
         </button>
-        <input name="fileDistortedFrame" id="fileDistortedFrame" type="file" required accept="image/png"
+        <input name="fileDistortedFrame" id="fileDistortedFrame" type="file" accept="image/png"
                style="display: none;"
                onchange="addFiles(this.files, 'file_distortedFrame', 'fileDistortedFrame')">
 
@@ -88,11 +96,13 @@
     </p>
     <p>
         Оригинальный кадр места:<br>
+        <img class="edit_preview" src="/api/get_media/{{ id_orig_frame }}"><br>
+
     <div class="file-input-wrapper">
-        <button type="button" class="custom-button" onclick="document.getElementById('fileFrame').click()">Изменить
+        <button type="button" class="custom-button" onclick="document.getElementById('fileFrame').click()">Выбрать
             файл
         </button>
-        <input type="file" name="fileFrame" id="fileFrame" required accept="image/png, image/jpeg"
+        <input type="file" name="fileFrame" id="fileFrame" accept="image/png, image/jpeg"
                style="display: none;"
                onchange="addFiles(this.files, 'file_frame', 'fileFrame')">
         <div id="file_frame" class="file-list"></div>
@@ -103,11 +113,16 @@
     </p>
     <p>
         Видеофрагмент:<br>
+        <video class="video_card" controls>
+            <source src="/api/get_media/{{ id_video }}" type="video/mp4">
+            Ваш браузер не поддерживает элемент audio.
+        </video>
+        <br>
     <div class="file-input-wrapper">
-        <button type="button" class="custom-button" onclick="document.getElementById('fileVideo').click()">Изменить
+        <button type="button" class="custom-button" onclick="document.getElementById('fileVideo').click()">Выбрать
             файл
         </button>
-        <input type="file" name="fileVideo" id="fileVideo" required accept="video/mp4"
+        <input type="file" name="fileVideo" id="fileVideo" accept="video/mp4"
                style="display: none;"
                onchange="addFiles(this.files, 'file_video', 'fileVideo')">
         <div id="file_video" class="file-list"></div>
@@ -116,11 +131,12 @@
     </p>
     <p>
         Текстовая подсказка (картинка с текстом):<br>
+        <img class="card_img_v" src="/api/get_media/{{ id_frame_text }} "><br>
     <div class="file-input-wrapper">
-        <button type="button" class="custom-button" onclick="document.getElementById('fileFrameText').click()">Изменить
+        <button type="button" class="custom-button" onclick="document.getElementById('fileFrameText').click()">Выбрать
             файл
         </button>
-        <input type="file" name="fileFrameText" id="fileFrameText" required accept="image/png, image/jpeg"
+        <input type="file" name="fileFrameText" id="fileFrameText" accept="image/png, image/jpeg"
                style="display: none;"
                onchange="addFiles(this.files, 'file_frameText', 'fileFrameText')">
         <div id="file_frameText" class="file-list"></div>
@@ -128,7 +144,7 @@
     <br>
     </p>
     <div class="file-input-wrapper">
-        <input class="custom-button" type="submit" value="Принять изменения" required/>
+        <input class="custom-button" type="submit" value="Добавить" required/>
     </div>
 
 </form>

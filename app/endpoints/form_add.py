@@ -5,12 +5,14 @@ from app.db import db_session
 from app.db.__all_models import Media, Films, Questions, Places
 from .api_media import ApiMedia
 from ..db.models.img_with_audio import ImgWithAudio
+from app.endpoints.api_questions import ApiQuestions
 
 
 class FormAdd:
     def __init__(self, ):
         self.__templates = Jinja2Templates(directory="app/templates")
         self.__apiMedia = ApiMedia()
+        self.__apiQuestions = ApiQuestions()
         self.router = APIRouter(prefix="/addForm")
         self.router.add_api_route("/film", self.__get_form_film, methods=["POST"], response_model=None)
         self.router.add_api_route("/film", self.__show_form_film, methods=["GET"])
@@ -38,7 +40,7 @@ class FormAdd:
                                fileFrame: UploadFile = File(...),
                                fileVideo: UploadFile = File(...),
                                fileFrameText: UploadFile = File(...)) -> RedirectResponse | HTMLResponse:
-        res = await self.add_question(question, answer1, answer2, answer3, answer4)
+        res = await self.__apiQuestions.add_question(question, answer1, answer2, answer3, answer4)
         success, id_question = res
         res = await self.__apiMedia.add_media(fileDistortedFrame)
         success1, id_distortedFrame = res
@@ -50,7 +52,6 @@ class FormAdd:
         success4, id_frameText = res
         res = await self.__add_img_with_audio(fileFact, fileAudioFact)
         success5, id_fact = res
-
         res = await  self.add_place(int(id_film), name_place, longitude, latitude, id_question, id_fact,
                                     id_distortedFrame, id_frame,
                                     id_video, id_frameText)
@@ -142,18 +143,3 @@ class FormAdd:
             db_sess.close()
             return False
         return True
-
-    async def add_question(self, question: str, answer1: str, answer2: str, answer3: str, answer4: str) \
-            -> tuple[bool, int]:
-        db_sess = db_session.create_session()
-        question_db: Questions = Questions()
-        question_db.question = question
-        question_db.answer1 = answer1
-        question_db.answer2 = answer2
-        question_db.answer3 = answer3
-        question_db.answer4 = answer4
-        db_sess.add(question_db)
-        db_sess.commit()
-        id: int = question_db.id
-        db_sess.close()
-        return (True, id)

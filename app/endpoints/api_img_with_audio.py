@@ -10,10 +10,12 @@ class ApiImgWithAudio:
         db_sess = db_session.create_session()
         introduction: db.ImgWithAudio = db_sess.query(db.ImgWithAudio).filter(db.ImgWithAudio.id == int(id)).first()
         if introduction is None:
-            return Error(error="Id invalid",
-                         message="нет такого id",
-                         status_code=404)
-
-        return ImgWithAudio(id=int(id),
-                            id_img=introduction.id_img,
-                            id_audio=introduction.id_audio)
+            response = Error(error="Id invalid",
+                             message="нет такого id",
+                             status_code=404)
+        else:
+            response = ImgWithAudio(id=int(id),
+                                    id_img=introduction.id_img,
+                                    id_audio=introduction.id_audio)
+        db_sess.close()
+        return response

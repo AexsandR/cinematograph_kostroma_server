@@ -1,10 +1,10 @@
 from http.client import HTTPException
-from pprint import pprint
-
 from app.db import db_session
 from fastapi import APIRouter, HTTPException, UploadFile
 from fastapi.responses import Response, JSONResponse
 from app.db.__all_models import *
+from datetime import datetime
+from email.utils import formatdate
 
 
 class ApiMedia:
@@ -38,9 +38,15 @@ class ApiMedia:
             if not media_type or not bin_data:
                 raise HTTPException(status_code=404, detail="Нет такого id")
 
+            # Генерируем уникальный хеш содержимого
+            import hashlib
+            content_hash = hashlib.md5(bin_data).hexdigest()
+            last_modified = formatdate(timeval=None, localtime=False, usegmt=True)
             headers = {
                 'Content-Length': str(len(bin_data)),
-                'Cache-Control': 'public, max-age=86400',
+                'Cache-Control': 'public, max-age=604800',  # 7 дней
+                'ETag': content_hash,  # Уникальный идентификатор содержимого
+                'Last-Modified': last_modified  # Замените на реальную дату модификации
             }
 
             if media_type.startswith('video/'):
@@ -49,7 +55,11 @@ class ApiMedia:
                     'Content-Disposition': 'inline'
                 })
             elif media_type.startswith('image/'):
-                headers['Content-Disposition'] = f'inline; filename="image_{id_media}.{media_type.split('/')[-1]}"'
+                ext = media_type.split('/')[-1]
+                headers.update({
+                    'Content-Disposition': f'inline; filename="image_{id_media}.{ext}"',
+                    'Cache-Control': 'no-cache'  # Для изображений отключаем кеш
+                })
 
             return Response(
                 content=bin_data,

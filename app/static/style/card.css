@@ -31,6 +31,7 @@
     padding: 10px;
     aspect-ratio: 9/16;
     width: 100%;
+    width: 300px;
 }
 .card_text{
     width: 100%;
@@ -76,4 +77,9 @@
 .button_win95_a{
     margin: 0 10px 10px 10px;
     text-align: center;
+}
+
+.video_card{
+    aspect-ratio: 16 / 9;
+    height: 200px;
 }
